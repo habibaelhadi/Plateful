@@ -42,4 +42,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth:23.1.0'
     implementation 'com.google.android.gms:play-services-auth:21.3.0'
+    implementation "androidx.navigation:navigation-fragment:2.5.3"
+    implementation "androidx.navigation:navigation-ui:2.5.3"
+    implementation 'com.airbnb.android:lottie:6.6.2'
 }

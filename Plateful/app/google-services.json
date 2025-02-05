@@ -12,7 +12,20 @@
           "package_name": "com.example.plateful"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1082972687699-dn1nnojn29rurdshc2dl596gquu61136.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.plateful",
+            "certificate_hash": "c4be916f31923006173411553c1236a824269541"
+          }
+        },
+        {
+          "client_id": "1082972687699-fpsalp7bk5b81jjmoi9eelsm01tjsaoi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDF955xis3-hw87SDhSjjtIZXI87OZAR-M"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082972687699-fpsalp7bk5b81jjmoi9eelsm01tjsaoi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
