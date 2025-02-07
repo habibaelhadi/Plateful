@@ -3,7 +3,22 @@
     <string name="signup">Signup</string>
     <string name="default_web_client_id">1082972687699-dn1nnojn29rurdshc2dl596gquu61136.apps.googleusercontent.com</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_lined"><u>Login</u></string>
     <string name="login">Login</string>
+    <string name="sign_up_lined"><u>Sign Up</u></string>
     <string name="sign_up">Sign Up</string>
     <string name="plateful">Plateful</string>
+    <string name="email_username">Email,Username</string>
+    <string name="password">Password</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="email">Email</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="username">Username</string>
+    <string name="already_have_an_account">Already have an account</string>
+    <string name="home">Home</string>
+    <string name="favourites">Favourites</string>
+    <string name="plan">Plan</string>
+    <string name="search">Search</string>
+    <string name="content_description_search">content description search</string>
+    <string name="page_title">page title</string>
 </resources>

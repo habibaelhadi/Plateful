@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/logo" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/loginBtn"
+        android:id="@+id/loginBtn_intro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="90dp"
@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/appName" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/signUpBtn"
+        android:id="@+id/signUpBtn_intro"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
@@ -63,15 +63,15 @@
         android:text="@string/sign_up"
         android:textColor="@color/intro_background"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/loginBtn"
-        app:layout_constraintStart_toStartOf="@+id/loginBtn"
-        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+        app:layout_constraintEnd_toEndOf="@+id/loginBtn_intro"
+        app:layout_constraintStart_toStartOf="@+id/loginBtn_intro"
+        app:layout_constraintTop_toBottomOf="@+id/loginBtn_intro" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpBtn"
+        app:layout_constraintTop_toBottomOf="@+id/signUpBtn_intro"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="36dp"
         android:orientation="horizontal"
