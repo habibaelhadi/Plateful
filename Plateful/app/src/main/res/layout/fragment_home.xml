@@ -200,7 +200,8 @@
                 app:layout_constraintStart_toStartOf="@id/card_search"
                 app:layout_constraintEnd_toEndOf="@id/card_search"
                 app:layout_constraintTop_toBottomOf="@id/areas_title_home"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp"
+                tools:listitem="@layout/countries_item"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
