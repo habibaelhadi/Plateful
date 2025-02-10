@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".ui.FavouriteFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="50dp">
+
+            <ImageButton
+                android:id="@+id/back_favourite_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/baseline_arrow_back_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/plate_icon_favourite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/healthy_food_32"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/back_favourite_page" />
+
+            <TextView
+                android:id="@+id/title_favourite_page"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/capriola"
+                android:text="@string/favourites"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="@id/plate_icon_favourite"
+                app:layout_constraintStart_toStartOf="@id/back_favourite_page"
+                app:layout_constraintTop_toBottomOf="@id/back_favourite_page" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/no_fav_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="no_fav,main_title_no_fav,secondary_title_no_fav" />
+
+            <ImageView
+                android:id="@+id/no_fav"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="116dp"
+                android:src="@drawable/ribbon"
+                app:layout_constraintEnd_toEndOf="@id/plate_icon_favourite"
+                app:layout_constraintStart_toStartOf="@id/back_favourite_page"
+                app:layout_constraintTop_toBottomOf="@id/title_favourite_page" />
+
+            <TextView
+                android:id="@+id/main_title_no_fav"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/capriola"
+                android:text="@string/no_meals_has_been_saved"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="@id/plate_icon_favourite"
+                app:layout_constraintStart_toStartOf="@id/back_favourite_page"
+                app:layout_constraintTop_toBottomOf="@id/no_fav" />
+
+            <TextView
+                android:id="@+id/secondary_title_no_fav"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/capriola"
+                android:text="@string/search_for_meals_to_save"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/plate_icon_favourite"
+                app:layout_constraintStart_toStartOf="@id/back_favourite_page"
+                app:layout_constraintTop_toBottomOf="@id/main_title_no_fav" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_fav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="@id/plate_icon_favourite"
+                app:layout_constraintStart_toStartOf="@id/back_favourite_page"
+                app:layout_constraintTop_toBottomOf="@id/title_favourite_page"
+                tools:listitem="@layout/list_page_items" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

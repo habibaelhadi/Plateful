@@ -35,6 +35,7 @@ public class FlagHelper {
         AREA_TO_COUNTRY_CODE.put("Tunisian", "TN");
         AREA_TO_COUNTRY_CODE.put("Turkish", "TR");
         AREA_TO_COUNTRY_CODE.put("Ukrainian", "UA");
+        AREA_TO_COUNTRY_CODE.put("Uruguayan", "UY");
         AREA_TO_COUNTRY_CODE.put("Vietnamese", "VN");
         AREA_TO_COUNTRY_CODE.put("Unknown", null);
     }
