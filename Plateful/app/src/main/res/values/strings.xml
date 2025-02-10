@@ -21,4 +21,14 @@
     <string name="search">Search</string>
     <string name="content_description_search">content description search</string>
     <string name="page_title">page title</string>
+    <string name="add_to_favourites">Add to favourites</string>
+    <string name="meal">Meal</string>
+    <string name="area">Area</string>
+    <string name="category">Category</string>
+    <string name="add_to_plan">Add to plan</string>
+    <string name="daily_inspiration">Daily inspiration</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="steps">Steps</string>
+    <string name="categories">Categories</string>
+    <string name="areas">Areas</string>
 </resources>

@@ -3,5 +3,8 @@
 
     </style>
 
-    <style name="Theme.Plateful" parent="Base.Theme.Plateful" />
+    <style name="Theme.Plateful" parent="Base.Theme.Plateful" >
+        <item name="colorPrimary">@color/intro_background</item>
+    </style>
+
 </resources>

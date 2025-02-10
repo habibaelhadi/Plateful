@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardBackgroundColor="@color/card_color"
+    app:cardCornerRadius="12dp"
+    app:strokeWidth="0dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/ingredient_card"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="@color/light_blue"
+            android:layout_margin="16dp"
+            app:strokeWidth="0dp"
+            app:cardElevation="2dp"
+            >
+            <ImageView
+                android:id="@+id/ingredient_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/lime"
+                android:padding="10dp"
+                />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/ingredient_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/ingredient_card"
+            app:layout_constraintBottom_toBottomOf="@id/ingredient_card"
+            app:layout_constraintStart_toEndOf="@id/ingredient_card"
+            tools:text="Ingredient name"
+            android:textSize="14sp"
+            android:fontFamily="@font/capriola"
+            android:textColor="@color/white"
+            android:layout_marginStart="16dp"/>
+
+
+        <TextView
+            android:id="@+id/measure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/ingredient_card"
+            app:layout_constraintBottom_toBottomOf="@id/ingredient_card"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="mesure"
+            android:textSize="12sp"
+            android:fontFamily="@font/capriola"
+            android:textColor="@color/white"
+            android:layout_marginEnd="16dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
