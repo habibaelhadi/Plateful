@@ -32,15 +32,14 @@ public class CountryClient {
 
     }
 
-    public void getCountry(String area){
-        countryService.getCountry(area).enqueue(new Callback<CountryDTO>() {
+    public void getCountry(){
+        countryService.getCountry().enqueue(new Callback<CountryDTO>() {
             @Override
             public void onResponse(Call<CountryDTO> call, Response<CountryDTO> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d(TAG, "API Response: " + response.body().toString());
                     List<CountryDTO.MealsDTO> meals = response.body().getMeals();
                     if (meals != null && !meals.isEmpty()) {
-                        networkCallBack.onCountrySuccess(meals.get(0));
+                        networkCallBack.onCountrySuccess(meals);
                     } else {
                         Log.e(TAG, "Meals list is null or empty.");
                         networkCallBack.onCountryFailure("No meals found in the response.");
@@ -66,7 +65,7 @@ public class CountryClient {
     }
 
     public interface NetworkCallBack {
-        public void onCountrySuccess(CountryDTO.MealsDTO country);
+        public void onCountrySuccess(List<CountryDTO.MealsDTO> countries);
         public void onCountryFailure(String errorMessage);
     }
 }

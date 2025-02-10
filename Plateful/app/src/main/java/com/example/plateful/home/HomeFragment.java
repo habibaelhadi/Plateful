@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,14 +23,17 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.plateful.R;
+import com.example.plateful.adapters.CategoryAdapter;
+import com.example.plateful.adapters.CountryAdapter;
 import com.example.plateful.model.CategoryDTO;
 import com.example.plateful.model.CountryDTO;
-import com.example.plateful.model.DailyMealDTO;
 import com.example.plateful.model.MealDTO;
 import com.example.plateful.network.CategoryClient;
 import com.example.plateful.network.CountryClient;
 import com.example.plateful.network.MealClient;
 import com.google.android.material.card.MaterialCardView;
+
+import java.util.List;
 
 public class HomeFragment extends Fragment implements MealClient.NetworkCallBack, CategoryClient.NetworkCallBack, CountryClient.NetworkCallBack {
 
@@ -42,6 +46,10 @@ public class HomeFragment extends Fragment implements MealClient.NetworkCallBack
     CountryClient countryClient;
     MaterialCardView cardView;
     SearchView searchView;
+    RecyclerView categoryRecyclerView;
+    RecyclerView countryRecyclerView;
+    CategoryAdapter categoryAdapter;
+    CountryAdapter countryAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -67,6 +75,9 @@ public class HomeFragment extends Fragment implements MealClient.NetworkCallBack
         EditText searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
         searchEditText.setTextColor(Color.BLACK);
 
+        categoryRecyclerView = view.findViewById(R.id.recycler_view_categories_home);
+        countryRecyclerView = view.findViewById(R.id.recycler_view_areas_home);
+
         mealClient = MealClient.getInstance();
         mealClient.setNetworkCallBack(this);
         mealClient.getDailyMeal();
@@ -77,7 +88,7 @@ public class HomeFragment extends Fragment implements MealClient.NetworkCallBack
 
         countryClient = CountryClient.getInstance();
         countryClient.setNetworkCallBack(this);
-        countryClient.getCountry("list");
+        countryClient.getCountry();
 
         title = view.findViewById(R.id.meal_title);
         area = view.findViewById(R.id.area_title);
@@ -106,8 +117,10 @@ public class HomeFragment extends Fragment implements MealClient.NetworkCallBack
     }
 
     @Override
-    public void onCategorySuccess(CategoryDTO.CategoryMealDTO category) {
-        Log.i("TAG", "--------onCategorySuccess: "+category.getIdCategory());
+    public void onCategorySuccess(List<CategoryDTO.CategoryMealDTO> category) {
+        Log.i("TAG", "##############onCategorySuccess: "+category.size());
+        categoryAdapter = new CategoryAdapter(requireContext(),category);
+        categoryRecyclerView.setAdapter(categoryAdapter);
     }
 
     @Override
@@ -116,8 +129,10 @@ public class HomeFragment extends Fragment implements MealClient.NetworkCallBack
     }
 
     @Override
-    public void onCountrySuccess(CountryDTO.MealsDTO country) {
-        Log.i("TAG", "**************onCountrySuccess: "+country.getStrMeal());
+    public void onCountrySuccess(List<CountryDTO.MealsDTO> countries) {
+        Log.i("TAG", "**************onCountrySuccess: "+countries.size());
+        countryAdapter = new CountryAdapter(requireContext(),countries);
+        countryRecyclerView.setAdapter(countryAdapter);
     }
 
     @Override

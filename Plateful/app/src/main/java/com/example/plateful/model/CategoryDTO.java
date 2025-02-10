@@ -1,5 +1,6 @@
 package com.example.plateful.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class CategoryDTO {
@@ -14,7 +15,7 @@ public class CategoryDTO {
         this.categories = categories;
     }
 
-    public static class CategoryMealDTO {
+    public static class CategoryMealDTO implements Serializable {
         private String idCategory;
         private String strCategory;
         private String strCategoryThumb;

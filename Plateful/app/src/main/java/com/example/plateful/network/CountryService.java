@@ -7,6 +7,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface CountryService {
-    @GET("list.php")
-    Call<CountryDTO> getCountry(@Query("c") String area);
+    @GET("list.php?a=list")
+    Call<CountryDTO> getCountry();
 }

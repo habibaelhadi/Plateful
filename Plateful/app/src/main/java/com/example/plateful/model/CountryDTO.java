@@ -1,5 +1,6 @@
 package com.example.plateful.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class CountryDTO {
@@ -14,33 +15,15 @@ public class CountryDTO {
         this.meals = meals;
     }
 
-    public static class MealsDTO {
-        private String strMeal;
-        private String strMealThumb;
-        private String idMeal;
+    public static class MealsDTO implements Serializable {
+        private String strArea;
 
-        public String getStrMeal() {
-            return strMeal;
+        public String getStrArea() {
+            return strArea;
         }
 
-        public void setStrMeal(String strMeal) {
-            this.strMeal = strMeal;
-        }
-
-        public String getStrMealThumb() {
-            return strMealThumb;
-        }
-
-        public void setStrMealThumb(String strMealThumb) {
-            this.strMealThumb = strMealThumb;
-        }
-
-        public String getIdMeal() {
-            return idMeal;
-        }
-
-        public void setIdMeal(String idMeal) {
-            this.idMeal = idMeal;
+        public void setStrArea(String strArea) {
+            this.strArea = strArea;
         }
     }
 }

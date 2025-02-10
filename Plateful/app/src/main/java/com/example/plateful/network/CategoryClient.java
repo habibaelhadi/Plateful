@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.example.plateful.model.CategoryDTO;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,14 +35,12 @@ public class CategoryClient {
 
             @Override
             public void onResponse(Call<CategoryDTO> call, Response<CategoryDTO> response) {
-                networkCallBack.onCategorySuccess(response.body().getCategories().get(2));
-                Log.i(TAG, "------onResponse: "+response.body().getCategories().get(2).getStrCategory());
+                networkCallBack.onCategorySuccess(response.body().getCategories());
             }
 
             @Override
             public void onFailure(Call<CategoryDTO> call, Throwable t) {
                 networkCallBack.onCategoryFailure(t.getMessage());
-                Log.i(TAG, "-------onFailure: "+t.getMessage());
             }
         });
     }
@@ -53,7 +53,7 @@ public class CategoryClient {
     }
 
     public interface NetworkCallBack {
-        public void onCategorySuccess(CategoryDTO.CategoryMealDTO category);
+        public void onCategorySuccess(List<CategoryDTO.CategoryMealDTO> category);
         public void onCategoryFailure(String errorMessage);
     }
 }
