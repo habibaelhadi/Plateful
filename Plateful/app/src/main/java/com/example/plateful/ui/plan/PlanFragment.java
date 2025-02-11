@@ -32,7 +32,7 @@ public class PlanFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding = new FragmentPlanBinding.bind(view);
+        binding = FragmentPlanBinding.bind(view);
     }
 
     @Override

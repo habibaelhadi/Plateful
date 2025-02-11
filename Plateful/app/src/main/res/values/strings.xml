@@ -36,4 +36,12 @@
     <string name="search_for_meals_to_save">Search for meals to save !</string>
     <string name="country">Country</string>
     <string name="logout">Logout</string>
+    <string name="my_plans">My Plans</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
 </resources>

@@ -44,6 +44,7 @@ public class IntroFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        binding = FragmentIntroBinding.bind(view);
 
         firebase = Firebase.getInstance();
         firebase.connectToGoogle(requireContext());

@@ -49,6 +49,8 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        binding = FragmentSignUpBinding.bind(view);
+
         binding.login.setOnClickListener(vw -> {
             Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_loginFragment);
         });

@@ -32,6 +32,8 @@ public class CategoryAreaListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        binding = FragmentCategoryAreaListBinding.bind(view);
     }
 
     @Override
