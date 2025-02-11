@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.plateful.databinding.ActivityMainBinding;
 import com.example.plateful.firebase.Firebase;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private Firebase firebase;
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -14,15 +14,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.plateful.R;
+import com.example.plateful.databinding.FragmentIntroBinding;
 import com.example.plateful.firebase.Firebase;
 
 
 public class IntroFragment extends Fragment {
 
-    Button signUp;
-    Button login;
+    FragmentIntroBinding binding;
     Firebase firebase;
-    CardView google;
 
     public IntroFragment() {
         // Required empty public constructor
@@ -45,23 +44,26 @@ public class IntroFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        signUp = view.findViewById(R.id.signUpBtn_intro);
-        login = view.findViewById(R.id.loginBtn_intro);
-        google = view.findViewById(R.id.googleBtn);
 
         firebase = Firebase.getInstance();
         firebase.connectToGoogle(requireContext());
 
-        google.setOnClickListener(v -> {
+        binding.googleBtn.setOnClickListener(v -> {
             firebase.signIn(requireActivity(), null);
         });
 
-        signUp.setOnClickListener(vw -> {
+        binding.signUpBtnIntro.setOnClickListener(vw -> {
             Navigation.findNavController(view).navigate(R.id.action_introFragment_to_signUpFragment);
         });
 
-        login.setOnClickListener(vw -> {
+        binding.loginBtnIntro.setOnClickListener(vw -> {
             Navigation.findNavController(view).navigate(R.id.action_introFragment_to_loginFragment);
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
     }
 }

@@ -17,18 +17,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.plateful.R;
+import com.example.plateful.databinding.FragmentSignUpBinding;
 import com.example.plateful.firebase.Firebase;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
 
 public class SignUpFragment extends Fragment {
-    TextView login;
-    Button signup;
+
     Firebase firebase;
-    EditText email;
-    TextInputEditText password;
-    TextInputEditText confirmPassword;
+    FragmentSignUpBinding binding;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -50,20 +48,15 @@ public class SignUpFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        login = view.findViewById(R.id.login);
-        signup = view.findViewById(R.id.signUpBtn);
-        email = view.findViewById(R.id.email_sign_up);
-        password = view.findViewById(R.id.password_sign_up);
-        confirmPassword = view.findViewById(R.id.confirm_password);
 
-        login.setOnClickListener(vw -> {
+        binding.login.setOnClickListener(vw -> {
             Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_loginFragment);
         });
 
-        signup.setOnClickListener(vw -> {
+        binding.signUpBtn.setOnClickListener(vw -> {
             firebase = Firebase.getInstance();
-            if(password.getText().toString().equals(confirmPassword.getText().toString())){
-                firebase.signup(email.getText().toString(),password.getText().toString());
+            if(binding.passwordSignUp.getText().toString().equals(binding.confirmPassword.getText().toString())){
+                firebase.signup(binding.emailSignUp.getText().toString(),binding.passwordSignUp.getText().toString());
                 firebase.setFirebaseResponse(new Firebase.FirebaseResponse() {
                     @Override
                     public void onResponseSuccess(String message) {
@@ -77,5 +70,11 @@ public class SignUpFragment extends Fragment {
                 });
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
     }
 }

@@ -34,4 +34,6 @@
     <string name="meals">Meals</string>
     <string name="no_meals_has_been_saved">No meals has been saved</string>
     <string name="search_for_meals_to_save">Search for meals to save !</string>
+    <string name="country">Country</string>
+    <string name="logout">Logout</string>
 </resources>

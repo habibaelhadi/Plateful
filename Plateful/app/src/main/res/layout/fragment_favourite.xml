@@ -51,6 +51,7 @@
                 android:id="@+id/no_fav_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="visible"
                 app:constraint_referenced_ids="no_fav,main_title_no_fav,secondary_title_no_fav" />
 
             <ImageView

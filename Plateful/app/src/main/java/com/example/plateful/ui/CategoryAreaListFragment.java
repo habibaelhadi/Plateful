@@ -11,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.plateful.R;
+import com.example.plateful.databinding.FragmentCategoryAreaListBinding;
 
 public class CategoryAreaListFragment extends Fragment {
+
+    FragmentCategoryAreaListBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,5 +32,11 @@ public class CategoryAreaListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
     }
 }

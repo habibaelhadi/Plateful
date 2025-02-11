@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.plateful.R;
+import com.example.plateful.databinding.FragmentLoginBinding;
 import com.example.plateful.firebase.Firebase;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,11 +24,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginFragment extends Fragment {
 
-    TextView signUp;
-    Button login;
     Firebase firebase;
-    EditText email;
-    TextInputEditText password;
+    FragmentLoginBinding binding;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -48,18 +46,14 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        signUp = view.findViewById(R.id.sign_up);
-        login = view.findViewById(R.id.loginBtn);
-        email = view.findViewById(R.id.email_login);
-        password = view.findViewById(R.id.password_login);
 
-        signUp.setOnClickListener(vw -> {
+        binding.signUp.setOnClickListener(vw -> {
             Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_signUpFragment);
         });
 
-        login.setOnClickListener(vw -> {
+        binding.loginBtn.setOnClickListener(vw -> {
             firebase = Firebase.getInstance();
-            firebase.login(email.getText().toString(), password.getText().toString());
+            firebase.login(binding.emailLogin.getText().toString(), binding.passwordLogin.getText().toString());
             firebase.setFirebaseResponse(new Firebase.FirebaseResponse() {
                 @Override
                 public void onResponseSuccess(String message) {
@@ -72,5 +66,11 @@ public class LoginFragment extends Fragment {
                 }
             });
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
     }
 }
