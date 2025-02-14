@@ -3,24 +3,25 @@ package com.example.plateful;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.plateful.databinding.ActivityMainBinding;
-import com.example.plateful.firebase.Firebase;
+import com.example.plateful.models.firebase.Firebase;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.navigation.NavigationView;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    private Firebase firebase;
     ActivityMainBinding binding;
     NavController navController;
 
@@ -31,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        firebase = Firebase.getInstance();
-        firebase.connectToGoogle(this);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(binding.fragmentContainerView2.getId());
@@ -45,13 +44,28 @@ public class MainActivity extends AppCompatActivity {
                 return handleBottomNavigation(item);
             }
         });
+
+        Set<Integer> visibleFragments = new HashSet<>(Arrays.asList(
+                R.id.homeFragment,
+                R.id.favouriteFragment,
+                R.id.planFragment2
+        ));
+
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (visibleFragments.contains(destination.getId())) {
+                binding.bottomNavigation.setVisibility(View.VISIBLE);
+            } else {
+                binding.bottomNavigation.setVisibility(View.GONE);
+            }
+        });
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        firebase.handleGoogleSignInResult(requestCode, data);
+       //firebase.handleGoogleSignInResult(requestCode, data);
     }
 
 

@@ -44,4 +44,6 @@
     <string name="wednesday">Wednesday</string>
     <string name="thursday">Thursday</string>
     <string name="friday">Friday</string>
+    <string name="please_fill_in_all_the_fields">Please fill in all the fields.</string>
+    <string name="ok">OK</string>
 </resources>

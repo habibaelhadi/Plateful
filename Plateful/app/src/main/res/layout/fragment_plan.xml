@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="65dp"
     android:background="@color/white"
-    tools:context=".ui.plan.PlanFragment">
+    tools:context=".views.plan.PlanFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

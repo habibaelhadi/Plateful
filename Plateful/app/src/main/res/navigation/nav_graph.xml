@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/splashFragment3">
     <fragment
         android:id="@+id/splashFragment3"
-        android:name="com.example.plateful.ui.splash.SplashFragment"
+        android:name="com.example.plateful.views.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -14,10 +14,13 @@
             app:destination="@id/introFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment3_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/introFragment"
-        android:name="com.example.plateful.ui.intro.IntroFragment"
+        android:name="com.example.plateful.views.intro.IntroFragment"
         android:label="fragment_intro"
         tools:layout="@layout/fragment_intro" >
         <action
@@ -26,10 +29,13 @@
         <action
             android:id="@+id/action_introFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_introFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.plateful.ui.authentication.SignUpFragment"
+        android:name="com.example.plateful.views.authentication.signup.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -42,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.plateful.ui.authentication.LoginFragment"
+        android:name="com.example.plateful.views.authentication.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -55,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.plateful.home.HomeFragment"
+        android:name="com.example.plateful.views.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -67,7 +73,7 @@
     </fragment>
     <fragment
         android:id="@+id/mealDetailsFragment"
-        android:name="com.example.plateful.ui.mealDetails.MealDetailsFragment"
+        android:name="com.example.plateful.views.mealDetails.MealDetailsFragment"
         android:label="fragment_meal_details"
         tools:layout="@layout/fragment_meal_details" >
         <argument
@@ -75,26 +81,26 @@
             app:argType="integer" />
         <argument
             android:name="mealDTO"
-            app:argType="com.example.plateful.model.MealDTO"
+            app:argType="com.example.plateful.models.DTOs.MealDTO"
             app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/categoryAreaListFragment"
-        android:name="com.example.plateful.ui.CategoryAreaListFragment"
+        android:name="com.example.plateful.views.mealslist.CategoryAreaListFragment"
         android:label="fragment_category_area_list"
         tools:layout="@layout/fragment_category_area_list" >
         <argument
             android:name="categoryDTO"
-            app:argType="com.example.plateful.model.CategoryDTO$CategoryMealDTO"
+            app:argType="com.example.plateful.models.DTOs.CategoryDTO$CategoryMealDTO"
             app:nullable="true" />
         <argument
             android:name="areaMealsDTO"
-            app:argType="com.example.plateful.model.CountryDTO$MealsDTO"
+            app:argType="com.example.plateful.models.DTOs.CountryDTO$MealsDTO"
             app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/favouriteFragment"
-        android:name="com.example.plateful.ui.FavouriteFragment"
+        android:name="com.example.plateful.views.favourites.FavouriteFragment"
         android:label="fragment_favourite"
         tools:layout="@layout/fragment_favourite" >
         <action
@@ -103,7 +109,7 @@
     </fragment>
     <fragment
         android:id="@+id/planFragment2"
-        android:name="com.example.plateful.ui.plan.PlanFragment"
+        android:name="com.example.plateful.views.plan.PlanFragment"
         android:label="fragment_plan"
         tools:layout="@layout/fragment_plan" >
         <action

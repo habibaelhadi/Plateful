@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/intro_background"
-    tools:context=".ui.authentication.SignUpFragment">
+    tools:context=".views.authentication.signup.SignUpFragment">
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="60dp"
         android:scaleType="fitCenter"
         android:src="@drawable/intro_logo2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -123,7 +123,7 @@
         android:id="@+id/signUpBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="30dp"
         android:backgroundTint="@color/button_color"
         android:fontFamily="@font/capriola"
         android:padding="12dp"
