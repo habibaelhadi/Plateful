@@ -7,11 +7,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plateful.R;
 import com.example.plateful.models.DTOs.CountryDTO;
 import com.example.plateful.models.flag.FlagHelper;
+import com.example.plateful.views.home.NavigateToFragments;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -20,10 +23,12 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryH
     List<CountryDTO.MealsDTO> countries;
     Context context;
     List<Integer> flags;
+    NavigateToFragments navigateToFragments;
 
-    public CountryAdapter(Context context, List<CountryDTO.MealsDTO> countries) {
+    public CountryAdapter(Context context, List<CountryDTO.MealsDTO> countries,NavigateToFragments navigateToFragments) {
         this.context = context;
         this.countries = countries;
+        this.navigateToFragments = navigateToFragments;
     }
 
     @NonNull
@@ -36,7 +41,11 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryH
 
     @Override
     public void onBindViewHolder(@NonNull CountryAdapter.CountryHolder holder, int position) {
+        CountryDTO.MealsDTO country = countries.get(position);
         holder.onBind(countries.get(position));
+        holder.card.setOnClickListener(vw -> {
+            navigateToFragments.navigateToMeals(null,country.getStrArea());
+        });
     }
 
     @Override
@@ -46,13 +55,14 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryH
 
         TextView title;
         TextView flag;
+       ConstraintLayout card;
 
 
         public CountryHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.area_title);
             flag = itemView.findViewById(R.id.area_image);
-
+            card = itemView.findViewById(R.id.area_card);
 
         }
 

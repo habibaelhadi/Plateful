@@ -10,4 +10,5 @@ public interface HomeView {
     public void showCategories(List<CategoryDTO.CategoryMealDTO> categories);
     public void showCountries(List<CountryDTO.MealsDTO> countries);
     public void showError(String errorMessage);
+    public void logout();
 }

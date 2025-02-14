@@ -4,4 +4,5 @@ public interface HomePresenter {
     public void getDailyMeal();
     public void getCategories();
     public void getCountry();
+    public void logout();
 }

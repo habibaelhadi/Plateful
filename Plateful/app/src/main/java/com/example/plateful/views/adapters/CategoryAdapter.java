@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.plateful.R;
 import com.example.plateful.models.DTOs.CategoryDTO;
+import com.example.plateful.views.home.NavigateToFragments;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
@@ -20,10 +21,12 @@ import java.util.Random;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryHolder>{
     private List<CategoryDTO.CategoryMealDTO> categories;
     Context context;
+    NavigateToFragments navigateToFragments;
 
-    public CategoryAdapter(Context context,List<CategoryDTO.CategoryMealDTO> categories) {
+    public CategoryAdapter(Context context,List<CategoryDTO.CategoryMealDTO> categories, NavigateToFragments navigateToFragments) {
         this.context = context;
         this.categories = categories;
+        this.navigateToFragments = navigateToFragments;
     }
 
     @NonNull
@@ -36,7 +39,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.CategoryHolder holder, int position) {
+        CategoryDTO.CategoryMealDTO category = categories.get(position);
         holder.onBind(categories.get(position));
+        holder.card.setOnClickListener(vw -> {
+            navigateToFragments.navigateToMeals(category.getStrCategory(),null);
+        });
     }
 
     @Override
@@ -54,6 +61,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             image = itemView.findViewById(R.id.category_image);
             title = itemView.findViewById(R.id.category_item_name);
             card = itemView.findViewById(R.id.category_item_card);
+
 
             int[] colors = {
                     ContextCompat.getColor(itemView.getContext(), R.color.soft_red),
@@ -75,6 +83,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                     .load(category.getStrCategoryThumb())
                     .into(image);
             card.setCardBackgroundColor(randomColor);
+
         }
     }
 }

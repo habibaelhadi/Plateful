@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_list"
     app:cardCornerRadius="20dp"
     app:cardElevation="10dp"
     app:cardBackgroundColor="@color/white"
@@ -43,7 +44,7 @@
             android:background="@color/obacity_black"/>
 
         <TextView
-            android:id="@+id/area_title_list_page"
+            android:id="@+id/name_of_area_or_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/capriola"
@@ -56,21 +57,6 @@
             android:padding="5dp"
             android:layout_margin="20dp"
             />
-
-        <TextView
-            android:id="@+id/category_title_list_page"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/capriola"
-            android:padding="5dp"
-            android:textColor="@color/white"
-            android:layout_marginEnd="8dp"
-            android:textSize="10sp"
-            tools:text="Vegiterian"
-            android:background="@drawable/rounded_text_background"
-            app:layout_constraintEnd_toStartOf="@id/area_title_list_page"
-            app:layout_constraintTop_toTopOf="@id/area_title_list_page"
-            app:layout_constraintBottom_toBottomOf="@id/area_title_list_page" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_to_favourites_list_page"

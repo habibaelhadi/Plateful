@@ -80,7 +80,7 @@ public class Firebase {
                 });
     }
 
-    private void logout() {
+    public void logout() {
         auth.signOut();
     }
 

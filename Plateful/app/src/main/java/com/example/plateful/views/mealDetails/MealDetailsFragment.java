@@ -1,5 +1,6 @@
 package com.example.plateful.views.mealDetails;
 
+import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,6 +17,9 @@ import android.webkit.WebChromeClient;
 
 import com.bumptech.glide.Glide;
 import com.example.plateful.R;
+import com.example.plateful.databinding.AlertDialogBinding;
+import com.example.plateful.presenters.mealsdetails.MealsDetailsPresenter;
+import com.example.plateful.presenters.mealsdetails.MealsDetailsPresenterImp;
 import com.example.plateful.views.adapters.IngredientsAdapter;
 import com.example.plateful.databinding.FragmentMealDetailsBinding;
 import com.example.plateful.models.flag.FlagHelper;
@@ -25,6 +29,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
 
     FragmentMealDetailsBinding binding;
     IngredientsAdapter adapter;
+    MealsDetailsPresenter presenter;
 
 
     @Override
@@ -38,13 +43,14 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentMealDetailsBinding.bind(view);
+        presenter = new MealsDetailsPresenterImp(this);
 
         int id = MealDetailsFragmentArgs.fromBundle(getArguments()).getId();
         MealDTO meal = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealDTO();
         if(meal != null){
             showData(meal);
         }else{
-            Log.i("TAG_Details", "onViewCreated: "+id);
+           presenter.getMealDetails(id);
         }
 
         binding.back.setOnClickListener(v -> {
@@ -73,6 +79,15 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         binding.actualSteps.setText(meal.getStrInstructions());
         adapter = new IngredientsAdapter(meal.getIngredients());
         binding.ingredientsRecyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void showError(String errorMessage) {
+        Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.alert_dialog);
+        AlertDialogBinding binding = AlertDialogBinding.bind(dialog.getWindow().getDecorView());
+        binding.tvAlertMessage.setText(errorMessage);
+        dialog.show();
     }
 
     private void showVideo(String youtubeUrl) {

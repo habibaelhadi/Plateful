@@ -4,15 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.fragment.app.FragmentActivity;
-
-import com.example.plateful.db.DatabaseLocalDataSource;
 import com.example.plateful.models.firebase.Firebase;
-import com.example.plateful.models.firebase.FirebaseResponse;
 import com.example.plateful.models.repository.DataRepository;
-import com.example.plateful.network.APIRemoteDataSource;
 import com.example.plateful.views.intro.IntroView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -53,11 +47,9 @@ public class IntroPresenterImp implements IntroPresenter{
                 if (account != null && account.getIdToken() != null) {
                     signInWithGoogle(account.getIdToken());
                 } else {
-                    Log.i("TAG", "handleGoogleSignInResult: ");
                     view.loginToGoogleFailure("ID token is null");
                 }
             } catch (ApiException e) {
-                Log.e("TAG", "Google Sign-In failed", e);
                 view.loginToGoogleFailure("Google Sign-In failed");
             }
         }
@@ -68,7 +60,6 @@ public class IntroPresenterImp implements IntroPresenter{
         Firebase.auth.signInWithCredential(authCredential)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Log.i("TAG", "signInWithGoogle: ");
                         view.loginToGoogleSuccess();
                     } else {
                         view.loginToGoogleFailure(task.getException().getMessage());

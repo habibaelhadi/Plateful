@@ -49,15 +49,16 @@
                 />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_meal_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/back_list_page"
-                app:layout_constraintEnd_toEndOf="@id/plate_icon"
-                app:layout_constraintTop_toBottomOf="@id/title_list_page"
                 android:layout_marginTop="16dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="vertical"
-                tools:listitem="@layout/list_page_items"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="@id/plate_icon"
+                app:layout_constraintStart_toStartOf="@id/back_list_page"
+                app:layout_constraintTop_toBottomOf="@id/title_list_page"
+                tools:listitem="@layout/list_page_items" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

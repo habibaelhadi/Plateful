@@ -3,8 +3,12 @@ package com.example.plateful.network;
 import com.example.plateful.models.DTOs.CategoryDTO;
 import com.example.plateful.models.DTOs.CountryDTO;
 import com.example.plateful.models.DTOs.DailyMealDTO;
+import com.example.plateful.models.DTOs.MealDetailsResponse;
+import com.example.plateful.models.DTOs.MealsCategoryAreaResponse;
+
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIRemoteDataSource {
@@ -16,6 +20,7 @@ public class APIRemoteDataSource {
     private APIRemoteDataSource(){
         Retrofit retrofit = new Retrofit.Builder().baseUrl(URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
         apiService = retrofit.create(APIService.class);
     }
@@ -33,6 +38,18 @@ public class APIRemoteDataSource {
     public Single<CountryDTO> getCountry() {return apiService.getCountry();}
 
     public Single<CategoryDTO> getCategories() {return apiService.getCategories();}
+
+    public Single<MealsCategoryAreaResponse> getMealsByCategory(String category){
+        return apiService.getMealsByCategory(category);
+    }
+
+    public Single<MealsCategoryAreaResponse> getMealsByArea(String area){
+        return apiService.getMealsByArea(area);
+    }
+
+    public Single<MealDetailsResponse> getMealDetails(String id){
+        return apiService.getMealDetails(id);
+    }
 
     public void getMealById(int id){
 

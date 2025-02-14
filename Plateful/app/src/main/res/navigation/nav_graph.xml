@@ -16,7 +16,9 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_splashFragment3_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/introFragment"
@@ -31,7 +33,9 @@
             app:destination="@id/signUpFragment" />
         <action
             android:id="@+id/action_introFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -44,7 +48,9 @@
             app:popUpTo="@id/introFragment" />
         <action
             android:id="@+id/action_signUpFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -57,7 +63,9 @@
             app:popUpTo="@id/introFragment" />
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -66,10 +74,17 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_mealDetailsFragment"
-            app:destination="@id/mealDetailsFragment" />
+            app:destination="@id/mealDetailsFragment"
+            app:popUpTo="@id/homeFragment" />
         <action
             android:id="@+id/action_homeFragment_to_categoryAreaListFragment"
-            app:destination="@id/categoryAreaListFragment" />
+            app:destination="@id/categoryAreaListFragment"
+            app:popUpTo="@id/homeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_introFragment"
+            app:destination="@id/introFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/mealDetailsFragment"
@@ -90,13 +105,16 @@
         android:label="fragment_category_area_list"
         tools:layout="@layout/fragment_category_area_list" >
         <argument
-            android:name="categoryDTO"
-            app:argType="com.example.plateful.models.DTOs.CategoryDTO$CategoryMealDTO"
+            android:name="categoryName"
+            app:argType="string"
             app:nullable="true" />
         <argument
-            android:name="areaMealsDTO"
-            app:argType="com.example.plateful.models.DTOs.CountryDTO$MealsDTO"
+            android:name="areaName"
+            app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_categoryAreaListFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/favouriteFragment"
@@ -105,7 +123,8 @@
         tools:layout="@layout/fragment_favourite" >
         <action
             android:id="@+id/action_favouriteFragment_to_mealDetailsFragment"
-            app:destination="@id/mealDetailsFragment" />
+            app:destination="@id/mealDetailsFragment"
+            app:popUpTo="@id/favouriteFragment" />
     </fragment>
     <fragment
         android:id="@+id/planFragment2"
@@ -114,6 +133,7 @@
         tools:layout="@layout/fragment_plan" >
         <action
             android:id="@+id/action_planFragment2_to_mealDetailsFragment"
-            app:destination="@id/mealDetailsFragment" />
+            app:destination="@id/mealDetailsFragment"
+            app:popUpTo="@id/planFragment2" />
     </fragment>
 </navigation>

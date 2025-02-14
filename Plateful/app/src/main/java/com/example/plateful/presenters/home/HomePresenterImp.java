@@ -1,6 +1,7 @@
 package com.example.plateful.presenters.home;
 
 
+import com.example.plateful.models.firebase.Firebase;
 import com.example.plateful.models.repository.DataRepository;
 import com.example.plateful.views.home.HomeView;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -10,10 +11,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class HomePresenterImp implements HomePresenter {
     private HomeView homeView;
     private DataRepository dataRepository;
+    private Firebase firebase;
 
     public HomePresenterImp(HomeView homeView) {
         this.homeView = homeView;
         dataRepository = DataRepository.getInstance();
+        firebase = Firebase.getInstance();
     }
 
     @Override
@@ -59,6 +62,12 @@ public class HomePresenterImp implements HomePresenter {
                             homeView.showError(error.getMessage());
                         }
                 );
+    }
+
+    @Override
+    public void logout() {
+        firebase.logout();
+        homeView.logout();
     }
 
 }
