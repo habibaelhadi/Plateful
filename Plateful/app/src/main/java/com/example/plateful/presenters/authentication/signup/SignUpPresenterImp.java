@@ -1,5 +1,7 @@
 package com.example.plateful.presenters.authentication.signup;
 
+import android.content.Context;
+
 import com.example.plateful.db.DatabaseLocalDataSource;
 import com.example.plateful.models.firebase.Firebase;
 import com.example.plateful.models.firebase.FirebaseResponse;
@@ -12,9 +14,9 @@ public class SignUpPresenterImp implements SignUpPresenter{
     private DataRepository repository;
     private Firebase firebase;
 
-    public SignUpPresenterImp(SignUpView view) {
+    public SignUpPresenterImp(SignUpView view, Context context) {
         this.view = view;
-        repository = DataRepository.getInstance();
+        repository = DataRepository.getInstance(context);
         firebase = Firebase.getInstance();
     }
 

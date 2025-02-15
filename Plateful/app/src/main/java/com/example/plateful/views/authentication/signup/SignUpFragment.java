@@ -45,7 +45,7 @@ public class SignUpFragment extends Fragment implements SignUpView {
         super.onViewCreated(view, savedInstanceState);
 
         binding = FragmentSignUpBinding.bind(view);
-        presenter = new SignUpPresenterImp(this);
+        presenter = new SignUpPresenterImp(this,requireContext());
         sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
         binding.login.setOnClickListener(vw -> {

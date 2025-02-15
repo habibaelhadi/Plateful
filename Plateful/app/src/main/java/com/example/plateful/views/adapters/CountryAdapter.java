@@ -16,18 +16,27 @@ import com.example.plateful.models.flag.FlagHelper;
 import com.example.plateful.views.home.NavigateToFragments;
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryHolder>{
 
     List<CountryDTO.MealsDTO> countries;
+    List<CountryDTO.MealsDTO> fullList;
     Context context;
     List<Integer> flags;
     NavigateToFragments navigateToFragments;
 
+    public void setCountries(List<CountryDTO.MealsDTO> countries) {
+        this.countries = countries;
+        this.fullList = new ArrayList<>(countries);
+        notifyDataSetChanged();
+    }
+
     public CountryAdapter(Context context, List<CountryDTO.MealsDTO> countries,NavigateToFragments navigateToFragments) {
         this.context = context;
         this.countries = countries;
+        this.fullList = new ArrayList<>(countries);
         this.navigateToFragments = navigateToFragments;
     }
 
@@ -55,7 +64,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryH
 
         TextView title;
         TextView flag;
-       ConstraintLayout card;
+        ConstraintLayout card;
 
 
         public CountryHolder(@NonNull View itemView) {
@@ -70,6 +79,18 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryH
             title.setText(country.getStrArea());
             flag.setText(FlagHelper.getFlagEmoji(country.getStrArea()));
         }
+    }
+
+    public void filter(String query) {
+        List<CountryDTO.MealsDTO> filteredList = new ArrayList<>();
+        for (CountryDTO.MealsDTO item : fullList) {
+            if (item.getStrArea().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        countries.clear();
+        countries.addAll(filteredList);
+        notifyDataSetChanged();
     }
 
 }

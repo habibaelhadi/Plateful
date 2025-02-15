@@ -53,7 +53,7 @@ public class CategoryAreaListFragment extends Fragment implements CategoryAreaLi
         args = CategoryAreaListFragmentArgs.fromBundle(getArguments());
         categoryName = args.getCategoryName();
         areaName = args.getAreaName();
-        presenter = new MealsListPresenterImp(this);
+        presenter = new MealsListPresenterImp(this,requireContext());
 
         if(categoryName != null){
             presenter.getMealsByCategory(categoryName);
@@ -88,6 +88,11 @@ public class CategoryAreaListFragment extends Fragment implements CategoryAreaLi
         AlertDialogBinding binding = AlertDialogBinding.bind(dialog.getWindow().getDecorView());
         binding.tvAlertMessage.setText(errorMessage);
         dialog.show();
+    }
+
+    @Override
+    public void addToFavourites() {
+
     }
 
     @Override

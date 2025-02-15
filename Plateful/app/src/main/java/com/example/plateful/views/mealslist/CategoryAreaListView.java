@@ -7,4 +7,5 @@ import java.util.List;
 public interface CategoryAreaListView {
     public void showMeals(List<MealCategoryAreaDTO> meals);
     public void showError(String errorMessage);
+    public void addToFavourites();
 }

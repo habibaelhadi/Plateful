@@ -1,6 +1,9 @@
 package com.example.plateful.presenters.mealsdetails;
 
+import android.content.Context;
+
 import com.example.plateful.db.DatabaseLocalDataSource;
+import com.example.plateful.models.db.MealsDatabase;
 import com.example.plateful.models.repository.DataRepository;
 import com.example.plateful.network.APIRemoteDataSource;
 import com.example.plateful.views.mealDetails.MealDetailsView;
@@ -12,9 +15,9 @@ public class MealsDetailsPresenterImp implements MealsDetailsPresenter{
     private MealDetailsView view;
     private DataRepository repository;
 
-    public MealsDetailsPresenterImp(MealDetailsView view) {
+    public MealsDetailsPresenterImp(MealDetailsView view, Context context) {
         this.view = view;
-        repository = DataRepository.getInstance();
+        repository = DataRepository.getInstance(context);
     }
 
     @Override
@@ -29,5 +32,20 @@ public class MealsDetailsPresenterImp implements MealsDetailsPresenter{
                         error -> view.showError(error.getMessage())
                 );
 
+    }
+
+    @Override
+    public void addToFavourites(MealsDatabase mealsDatabase) {
+        repository.insert(mealsDatabase)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> {
+                            view.addToFavourites();
+                        },
+                        error -> {
+                            view.showError(error.getMessage());
+                        }
+                );
     }
 }

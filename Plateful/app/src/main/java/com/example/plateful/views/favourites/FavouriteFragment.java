@@ -1,5 +1,6 @@
 package com.example.plateful.views.favourites;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,9 +13,17 @@ import android.view.ViewGroup;
 
 import com.example.plateful.R;
 import com.example.plateful.databinding.FragmentFavouriteBinding;
+import com.example.plateful.models.db.MealsDatabase;
+import com.example.plateful.presenters.favourites.FavouritesPresenter;
+import com.example.plateful.presenters.favourites.FavouritesPresenterImp;
+import com.example.plateful.views.adapters.FavouritesAdapter;
 
-public class FavouriteFragment extends Fragment {
+import java.util.List;
+
+public class FavouriteFragment extends Fragment implements FavouriteView{
     FragmentFavouriteBinding binding;
+    FavouritesAdapter adapter;
+    FavouritesPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,11 +43,37 @@ public class FavouriteFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding = FragmentFavouriteBinding.bind(view);
+        presenter = new FavouritesPresenterImp(this,requireContext());
+        presenter.getFavourites();
+
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         binding = null;
+    }
+
+    @Override
+    public void showFavourites(List<MealsDatabase> favourites) {
+        if(favourites.isEmpty()){
+            binding.recyclerFav.setVisibility(View.GONE);
+            binding.noFavGroup.setVisibility(View.VISIBLE);
+        }else{
+            adapter = new FavouritesAdapter(favourites,requireContext());
+            binding.noFavGroup.setVisibility(View.GONE);
+            binding.recyclerFav.setVisibility(View.VISIBLE);
+            binding.recyclerFav.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void showError(String errorMessage) {
+        Dialog dialog = new Dialog(requireContext());
+        dialog.setContentView(R.layout.alert_dialog);
+        dialog.setTitle(errorMessage);
+        dialog.show();
     }
 }

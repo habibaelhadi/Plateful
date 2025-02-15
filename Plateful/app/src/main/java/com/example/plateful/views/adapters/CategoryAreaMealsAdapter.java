@@ -34,7 +34,7 @@ public class CategoryAreaMealsAdapter extends RecyclerView.Adapter<CategoryAreaM
     @NonNull
     @Override
     public CategoryMealsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_page_items, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.meals_page_items, parent, false);
         CategoryMealsHolder holder = new CategoryMealsHolder(view);
         return holder;
     }

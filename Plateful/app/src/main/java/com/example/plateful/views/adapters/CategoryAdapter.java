@@ -15,17 +15,26 @@ import com.example.plateful.models.DTOs.CategoryDTO;
 import com.example.plateful.views.home.NavigateToFragments;
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryHolder>{
     private List<CategoryDTO.CategoryMealDTO> categories;
+    private List<CategoryDTO.CategoryMealDTO> fullList;
     Context context;
     NavigateToFragments navigateToFragments;
 
-    public CategoryAdapter(Context context,List<CategoryDTO.CategoryMealDTO> categories, NavigateToFragments navigateToFragments) {
+    public void setCategories(List<CategoryDTO.CategoryMealDTO> categories) {
+        this.categories = categories;
+        this.fullList = new ArrayList<>(categories);
+        notifyDataSetChanged();
+    }
+
+    public CategoryAdapter(Context context, List<CategoryDTO.CategoryMealDTO> categories, NavigateToFragments navigateToFragments) {
         this.context = context;
         this.categories = categories;
+        this.fullList = new ArrayList<>(categories);
         this.navigateToFragments = navigateToFragments;
     }
 
@@ -85,5 +94,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             card.setCardBackgroundColor(randomColor);
 
         }
+    }
+
+    public void filter(String query) {
+        List<CategoryDTO.CategoryMealDTO> filteredList = new ArrayList<>();
+        for (CategoryDTO.CategoryMealDTO item : fullList) {
+            if (item.getStrCategory().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        categories.clear();
+        categories.addAll(filteredList);
+        notifyDataSetChanged();
     }
 }

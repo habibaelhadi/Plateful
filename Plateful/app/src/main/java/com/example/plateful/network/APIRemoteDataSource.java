@@ -1,11 +1,14 @@
 package com.example.plateful.network;
 
+import com.example.plateful.models.DTOs.AllIngredients;
 import com.example.plateful.models.DTOs.CategoryDTO;
 import com.example.plateful.models.DTOs.CountryDTO;
 import com.example.plateful.models.DTOs.DailyMealDTO;
+import com.example.plateful.models.DTOs.IngredientDTO;
 import com.example.plateful.models.DTOs.MealDetailsResponse;
 import com.example.plateful.models.DTOs.MealsCategoryAreaResponse;
 
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
@@ -51,7 +54,6 @@ public class APIRemoteDataSource {
         return apiService.getMealDetails(id);
     }
 
-    public void getMealById(int id){
+    public Observable<AllIngredients> getAllIngredients(){ return apiService.getAllIngredients();}
 
-    }
 }

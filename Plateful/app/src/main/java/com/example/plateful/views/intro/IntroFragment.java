@@ -62,7 +62,7 @@ public class IntroFragment extends Fragment implements IntroView{
 
         binding = FragmentIntroBinding.bind(view);
         sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        introPresenter = new IntroPresenterImp(this);
+        introPresenter = new IntroPresenterImp(this,requireContext());
 
         binding.googleBtn.setOnClickListener(v -> {
             introPresenter.loginToGoogle(requireActivity(), requireContext(), googleSignInLauncher);

@@ -20,9 +20,9 @@ public class IntroPresenterImp implements IntroPresenter{
     private final DataRepository repository;
     private final Firebase firebase;
 
-    public IntroPresenterImp(IntroView view) {
+    public IntroPresenterImp(IntroView view,Context context) {
         this.view = view;
-        repository = DataRepository.getInstance();
+        repository = DataRepository.getInstance(context);
         firebase = Firebase.getInstance();
     }
 

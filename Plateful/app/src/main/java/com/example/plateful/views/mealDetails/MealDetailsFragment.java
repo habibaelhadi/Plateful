@@ -1,6 +1,7 @@
 package com.example.plateful.views.mealDetails;
 
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ import android.webkit.WebChromeClient;
 import com.bumptech.glide.Glide;
 import com.example.plateful.R;
 import com.example.plateful.databinding.AlertDialogBinding;
+import com.example.plateful.models.db.MealsDatabase;
 import com.example.plateful.presenters.mealsdetails.MealsDetailsPresenter;
 import com.example.plateful.presenters.mealsdetails.MealsDetailsPresenterImp;
 import com.example.plateful.views.adapters.IngredientsAdapter;
@@ -25,11 +27,15 @@ import com.example.plateful.databinding.FragmentMealDetailsBinding;
 import com.example.plateful.models.flag.FlagHelper;
 import com.example.plateful.models.DTOs.MealDTO;
 
+import java.util.Date;
+
 public class MealDetailsFragment extends Fragment implements MealDetailsView {
 
     FragmentMealDetailsBinding binding;
     IngredientsAdapter adapter;
     MealsDetailsPresenter presenter;
+    boolean isSaved = false;
+    SharedPreferences sharedPreferences;
 
 
     @Override
@@ -43,7 +49,8 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentMealDetailsBinding.bind(view);
-        presenter = new MealsDetailsPresenterImp(this);
+        presenter = new MealsDetailsPresenterImp(this,requireContext());
+        sharedPreferences = requireActivity().getSharedPreferences("MyPrefs",0);
 
         int id = MealDetailsFragmentArgs.fromBundle(getArguments()).getId();
         MealDTO meal = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealDTO();
@@ -79,6 +86,28 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         binding.actualSteps.setText(meal.getStrInstructions());
         adapter = new IngredientsAdapter(meal.getIngredients());
         binding.ingredientsRecyclerView.setAdapter(adapter);
+
+        binding.save.setOnClickListener(vw -> {
+            addToFavourite(meal);
+        });
+    }
+
+    private void addToFavourite(MealDTO meal){
+        if(isSaved){
+            binding.save.setImageResource(R.drawable.ic_baseline_bookmark_border_24);
+            isSaved = false;
+        }else{
+            MealsDatabase mealsDatabase = new MealsDatabase(
+                    meal.getIdMeal(),
+                    sharedPreferences.getString("id",""),
+                    "favourite",
+                    meal,
+                    true,
+                    false
+            );
+            presenter.addToFavourites(mealsDatabase);
+            isSaved = true;
+        }
     }
 
     @Override
@@ -88,6 +117,11 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         AlertDialogBinding binding = AlertDialogBinding.bind(dialog.getWindow().getDecorView());
         binding.tvAlertMessage.setText(errorMessage);
         dialog.show();
+    }
+
+    @Override
+    public void addToFavourites() {
+        binding.save.setImageResource(R.drawable.bookmark);
     }
 
     private void showVideo(String youtubeUrl) {
