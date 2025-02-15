@@ -65,6 +65,10 @@ public class FavouriteFragment extends Fragment implements FavouriteView{
             binding.noFavGroup.setVisibility(View.GONE);
             binding.recyclerFav.setVisibility(View.VISIBLE);
             binding.recyclerFav.setAdapter(adapter);
+            adapter.setButtonOnClick(mealsDatabase -> {
+                presenter.removeFromFavourites(mealsDatabase);
+                presenter.getFavourites();
+            });
             adapter.notifyDataSetChanged();
         }
     }

@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +25,6 @@ import com.example.plateful.views.adapters.IngredientsAdapter;
 import com.example.plateful.databinding.FragmentMealDetailsBinding;
 import com.example.plateful.models.flag.FlagHelper;
 import com.example.plateful.models.DTOs.MealDTO;
-
-import java.util.Date;
 
 public class MealDetailsFragment extends Fragment implements MealDetailsView {
 
@@ -88,13 +85,21 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         binding.ingredientsRecyclerView.setAdapter(adapter);
 
         binding.save.setOnClickListener(vw -> {
-            addToFavourite(meal);
+            manageSaveButton(meal);
         });
     }
 
-    private void addToFavourite(MealDTO meal){
+    private void manageSaveButton(MealDTO meal){
         if(isSaved){
-            binding.save.setImageResource(R.drawable.ic_baseline_bookmark_border_24);
+            MealsDatabase mealsDatabase = new MealsDatabase(
+                    meal.getIdMeal(),
+                    sharedPreferences.getString("id",""),
+                    "favourite",
+                    meal,
+                    true,
+                    false
+            );
+            presenter.removeFromFavourites(mealsDatabase);
             isSaved = false;
         }else{
             MealsDatabase mealsDatabase = new MealsDatabase(
@@ -122,6 +127,11 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     @Override
     public void addToFavourites() {
         binding.save.setImageResource(R.drawable.bookmark);
+    }
+
+    @Override
+    public void removeFromFavourites() {
+        binding.save.setImageResource(R.drawable.ic_baseline_bookmark_border_24);
     }
 
     private void showVideo(String youtubeUrl) {

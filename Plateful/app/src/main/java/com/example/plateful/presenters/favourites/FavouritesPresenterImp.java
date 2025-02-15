@@ -34,4 +34,12 @@ public class FavouritesPresenterImp implements FavouritesPresenter{
                         }
                 );
     }
+
+    @Override
+    public void removeFromFavourites(MealsDatabase mealsDatabase) {
+        repository.delete(mealsDatabase)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
 }

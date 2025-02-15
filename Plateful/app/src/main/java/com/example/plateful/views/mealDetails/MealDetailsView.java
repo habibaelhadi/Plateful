@@ -6,5 +6,6 @@ public interface MealDetailsView {
     public void showData(MealDTO meal);
     public void showError(String errorMessage);
     public void addToFavourites();
+    public void removeFromFavourites();
 
 }

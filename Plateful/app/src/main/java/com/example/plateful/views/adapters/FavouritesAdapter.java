@@ -21,6 +21,11 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
 
     private List<MealsDatabase> meals;
     Context context;
+    ButtonOnClick buttonOnClick;
+
+    public void setButtonOnClick(ButtonOnClick buttonOnClick) {
+        this.buttonOnClick = buttonOnClick;
+    }
 
     public FavouritesAdapter(List<MealsDatabase> meals, Context context) {
         this.meals = meals;
@@ -51,6 +56,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
         TextView title;
         TextView category;
         Button removeFromFav;
+        Button addToPlan;
 
         public FavouriteHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,6 +64,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
             title = itemView.findViewById(R.id.meal_title_list_page);
             category = itemView.findViewById(R.id.name_of_area_or_category);
             removeFromFav = itemView.findViewById(R.id.add_to_favourites_list_page);
+            addToPlan = itemView.findViewById(R.id.add_to_plan_list_page);
         }
 
         public void onBind(MealsDatabase mealsDatabase){
@@ -67,6 +74,14 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
             Glide.with(itemView.getContext())
                     .load(mealsDatabase.getMeal().getStrMealThumb())
                     .into(image);
+            addToPlan.setVisibility(View.GONE);
+            removeFromFav.setOnClickListener(vw -> {
+                buttonOnClick.setOnClick(mealsDatabase);
+            });
         }
+    }
+
+    public interface ButtonOnClick{
+        public void setOnClick(MealsDatabase mealsDatabase);
     }
 }

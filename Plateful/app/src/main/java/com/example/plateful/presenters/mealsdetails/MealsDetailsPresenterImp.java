@@ -48,4 +48,19 @@ public class MealsDetailsPresenterImp implements MealsDetailsPresenter{
                         }
                 );
     }
+
+    @Override
+    public void removeFromFavourites(MealsDatabase mealsDatabase) {
+        repository.delete(mealsDatabase)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> {
+                            view.removeFromFavourites();
+                        },
+                        error -> {
+                            view.showError(error.getMessage());
+                        }
+                );
+    }
 }
