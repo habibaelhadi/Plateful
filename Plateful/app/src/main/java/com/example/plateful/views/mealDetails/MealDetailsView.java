@@ -7,5 +7,6 @@ public interface MealDetailsView {
     public void showError(String errorMessage);
     public void addToFavourites();
     public void removeFromFavourites();
+    public void addToPlan();
 
 }

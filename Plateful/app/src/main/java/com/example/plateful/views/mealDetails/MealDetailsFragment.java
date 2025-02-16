@@ -2,6 +2,8 @@ package com.example.plateful.views.mealDetails;
 
 import android.app.Dialog;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.os.Parcel;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +28,15 @@ import com.example.plateful.views.adapters.IngredientsAdapter;
 import com.example.plateful.databinding.FragmentMealDetailsBinding;
 import com.example.plateful.models.flag.FlagHelper;
 import com.example.plateful.models.DTOs.MealDTO;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
+import com.google.android.material.datepicker.MaterialDatePicker;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class MealDetailsFragment extends Fragment implements MealDetailsView {
 
@@ -87,6 +99,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         binding.save.setOnClickListener(vw -> {
             manageSaveButton(meal);
         });
+
+        binding.plan.setOnClickListener(vw -> {
+            showCalendarPicker(meal);
+        });
     }
 
     private void manageSaveButton(MealDTO meal){
@@ -119,6 +135,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     public void showError(String errorMessage) {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.alert_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         AlertDialogBinding binding = AlertDialogBinding.bind(dialog.getWindow().getDecorView());
         binding.tvAlertMessage.setText(errorMessage);
         dialog.show();
@@ -132,6 +149,11 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     @Override
     public void removeFromFavourites() {
         binding.save.setImageResource(R.drawable.ic_baseline_bookmark_border_24);
+    }
+
+    @Override
+    public void addToPlan() {
+        binding.plan.setText(R.string.remove_from_plan);
     }
 
     private void showVideo(String youtubeUrl) {
@@ -151,6 +173,62 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         } else {
             binding.webView.setVisibility(View.GONE);
         }
+    }
+
+    private void showCalendarPicker(MealDTO mealDTO) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Africa/Cairo"));
+
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+        long startOfWeek = calendar.getTimeInMillis();
+
+        calendar.add(Calendar.DAY_OF_WEEK, 6);
+        long endOfWeek = calendar.getTimeInMillis();
+
+        CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
+        constraintsBuilder.setStart(startOfWeek);
+        constraintsBuilder.setEnd(endOfWeek);
+        constraintsBuilder.setValidator(new CalendarConstraints.DateValidator() {
+            @Override
+            public boolean isValid(long date) {
+                return date >= startOfWeek && date <= endOfWeek;
+            }
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(@NonNull Parcel parcel, int i) {
+
+            }
+        });
+
+        MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select a day this week")
+                .setCalendarConstraints(constraintsBuilder.build())
+                .setSelection(MaterialDatePicker.todayInUtcMilliseconds()) // Default selection: today
+                .build();
+        datePicker.show(getParentFragmentManager(), "DATE_PICKER");
+
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+            Calendar selectedCalendar = Calendar.getInstance(TimeZone.getTimeZone("Africa/Cairo"));
+            selectedCalendar.setTimeInMillis(selection);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            String selectedDate = format.format(selectedCalendar.getTime());
+            saveMealToPlan(mealDTO,selectedDate);
+        });
+}
+
+    private void saveMealToPlan(MealDTO meal, String selectedDate) {
+        MealsDatabase mealsDatabase = new MealsDatabase(
+                meal.getIdMeal(),
+                sharedPreferences.getString("id", ""),
+                selectedDate,
+                meal,
+                false,
+                true
+        );
+        presenter.addToPlan(mealsDatabase);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.example.plateful.views.favourites;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -77,6 +79,7 @@ public class FavouriteFragment extends Fragment implements FavouriteView{
     public void showError(String errorMessage) {
         Dialog dialog = new Dialog(requireContext());
         dialog.setContentView(R.layout.alert_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setTitle(errorMessage);
         dialog.show();
     }

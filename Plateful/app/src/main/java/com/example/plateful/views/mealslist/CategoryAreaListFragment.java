@@ -1,6 +1,8 @@
 package com.example.plateful.views.mealslist;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -85,6 +87,7 @@ public class CategoryAreaListFragment extends Fragment implements CategoryAreaLi
     public void showError(String errorMessage) {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.alert_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         AlertDialogBinding binding = AlertDialogBinding.bind(dialog.getWindow().getDecorView());
         binding.tvAlertMessage.setText(errorMessage);
         dialog.show();

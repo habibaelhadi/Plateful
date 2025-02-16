@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -87,6 +89,7 @@ public class IntroFragment extends Fragment implements IntroView{
     public void loginToGoogleFailure(String message) {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.alert_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertBinding.tvAlertMessage.setText(message);
         dialog.show();
         dialog.findViewById(R.id.btn_dismiss).setOnClickListener(vw1 -> {

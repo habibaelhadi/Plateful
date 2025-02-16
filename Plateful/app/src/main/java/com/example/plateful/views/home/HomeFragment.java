@@ -4,6 +4,7 @@ import static java.lang.Integer.parseInt;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -217,6 +218,7 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
     public void showError(String errorMessage) {
         Dialog dialog = new Dialog(requireContext());
         dialog.setContentView(R.layout.alert_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertBinding.tvAlertMessage.setText(errorMessage);
         dialog.show();
     }
