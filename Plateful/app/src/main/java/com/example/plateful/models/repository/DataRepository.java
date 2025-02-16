@@ -62,4 +62,8 @@ public class DataRepository {
     public Completable insert(MealsDatabase mealsDatabase) {return databaseLocalDataSource.insert(mealsDatabase);}
 
     public Completable delete(MealsDatabase mealsDatabase) {return databaseLocalDataSource.delete(mealsDatabase);}
+
+    public void fetchDataFromFirebase() {
+        databaseLocalDataSource.fetchDataFromFirebase();
+    }
 }

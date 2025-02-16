@@ -102,8 +102,6 @@ public class MealsDetailsPresenterImp implements MealsDetailsPresenter{
 
     @Override
     public void removeFromFirebase(MealsDatabase mealsDatabase) {
-        String userId = sharedPreferences.getString("userId", null);
-
             myRef.child("Users")
                     .child(sharedPreferences.getString("id",""))
                     .child(mealsDatabase.getMealId())

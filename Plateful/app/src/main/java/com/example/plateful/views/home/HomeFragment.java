@@ -180,6 +180,7 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
                        false
                );
                homePresenterImp.addToFavourites(mealsDatabase);
+               homePresenterImp.backupData(mealsDatabase);
                isFavourite = true;
            }else{
                MealsDatabase mealsDatabase = new MealsDatabase(
@@ -191,6 +192,7 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
                        false
                );
                homePresenterImp.removeFromFavourites(mealsDatabase);
+               homePresenterImp.removeFromFirebase(mealsDatabase);
                isFavourite = false;
            }
         });
@@ -314,5 +316,6 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
                 true
         );
         homePresenterImp.addToPlan(mealsDatabase);
+        homePresenterImp.backupData(mealsDatabase);
     }
 }

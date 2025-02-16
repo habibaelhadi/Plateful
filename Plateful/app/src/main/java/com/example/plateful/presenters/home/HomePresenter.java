@@ -12,4 +12,6 @@ public interface HomePresenter {
     public void removeFromFavourites(MealsDatabase mealsDatabase);
     public void addToPlan(MealsDatabase mealsDatabase);
     public void getDataFromFirebase();
+    public void backupData(MealsDatabase mealsDatabase);
+    public void removeFromFirebase(MealsDatabase mealsDatabase);
 }

@@ -162,19 +162,25 @@ public class HomePresenterImp implements HomePresenter {
 
     @Override
     public void getDataFromFirebase() {
+        dataRepository.fetchDataFromFirebase();
+    }
+
+    @Override
+    public void backupData(MealsDatabase mealsDatabase) {
         myRef.child("Users")
                 .child(sharedPreferences.getString("id",""))
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if(task.isSuccessful()){
-                            Log.i("TAG", "onComplete: "+task.getResult().getValue());
-                        }else{
-                            Log.i("TAG", "onComplete: "+task.getException());
-                        }
-                    }
-                });
+                .child(mealsDatabase.getMealId())
+                .child(mealsDatabase.getDate())
+                .setValue(mealsDatabase);
+    }
+
+    @Override
+    public void removeFromFirebase(MealsDatabase mealsDatabase) {
+        myRef.child("Users")
+                .child(sharedPreferences.getString("id",""))
+                .child(mealsDatabase.getMealId())
+                .child(mealsDatabase.getDate())
+                .removeValue();
     }
 
 }
