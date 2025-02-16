@@ -125,6 +125,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView, Sh
                     true,
                     false
             );
+            presenter.removeFromFirebase(mealsDatabase);
             presenter.removeFromFavourites(mealsDatabase);
             isSaved = false;
         }else{
@@ -137,6 +138,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView, Sh
                     false
             );
             presenter.addToFavourites(mealsDatabase);
+            presenter.backupData(mealsDatabase);
             isSaved = true;
         }
     }
@@ -199,6 +201,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView, Sh
                 true
         );
         presenter.addToPlan(mealsDatabase);
+        presenter.backupData(mealsDatabase);
     }
 
     @Override

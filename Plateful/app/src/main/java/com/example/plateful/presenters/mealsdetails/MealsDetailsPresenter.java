@@ -7,4 +7,6 @@ public interface MealsDetailsPresenter {
     public void addToFavourites(MealsDatabase mealsDatabase);
     public void removeFromFavourites(MealsDatabase mealsDatabase);
     public void addToPlan(MealsDatabase mealsDatabase);
+    public void backupData(MealsDatabase mealsDatabase);
+    public void removeFromFirebase(MealsDatabase mealsDatabase);
 }

@@ -2,7 +2,10 @@ package com.example.plateful.presenters.home;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.example.plateful.models.DTOs.AllIngredients;
 import com.example.plateful.models.DTOs.CategoryDTO;
@@ -11,6 +14,11 @@ import com.example.plateful.models.db.MealsDatabase;
 import com.example.plateful.models.firebase.Firebase;
 import com.example.plateful.models.repository.DataRepository;
 import com.example.plateful.views.home.HomeView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +35,17 @@ public class HomePresenterImp implements HomePresenter {
     private HomeView homeView;
     private DataRepository dataRepository;
     private Firebase firebase;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    SharedPreferences sharedPreferences;
 
     public HomePresenterImp(HomeView homeView, Context context) {
         this.homeView = homeView;
         dataRepository = DataRepository.getInstance(context);
         firebase = Firebase.getInstance();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("meals");
+        sharedPreferences = context.getSharedPreferences("MyPrefs",0);
     }
 
     @Override
@@ -144,6 +158,23 @@ public class HomePresenterImp implements HomePresenter {
                             homeView.showError(error.getMessage());
                         }
                 );
+    }
+
+    @Override
+    public void getDataFromFirebase() {
+        myRef.child("Users")
+                .child(sharedPreferences.getString("id",""))
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if(task.isSuccessful()){
+                            Log.i("TAG", "onComplete: "+task.getResult().getValue());
+                        }else{
+                            Log.i("TAG", "onComplete: "+task.getException());
+                        }
+                    }
+                });
     }
 
 }

@@ -90,6 +90,7 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
         binding.recyclerViewIngredientsHome.setAdapter(ingredientsAdapter);
 
         homePresenterImp = new HomePresenterImp(this,requireContext());
+        homePresenterImp.getDataFromFirebase();
         homePresenterImp.getDailyMeal();
         homePresenterImp.getCategories();
         homePresenterImp.getCountry();
