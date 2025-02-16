@@ -12,4 +12,5 @@ public interface HomePresenter {
     public void logout();
     public void addToFavourites(MealsDatabase mealsDatabase);
     public void removeFromFavourites(MealsDatabase mealsDatabase);
+    public void addToPlan(MealsDatabase mealsDatabase);
 }

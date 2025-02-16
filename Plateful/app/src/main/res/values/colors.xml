@@ -15,4 +15,5 @@
     <color name="sky_blue">#A0C4FF</color>
     <color name="lavender">#BDB2FF</color>
     <color name="soft_pink">#FFC6FF</color>
+    <color name="plan_button_disabled">#D24C3A</color>
 </resources>

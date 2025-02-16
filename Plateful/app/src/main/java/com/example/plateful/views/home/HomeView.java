@@ -15,4 +15,5 @@ public interface HomeView {
     public void logout();
     public void addToFavourites();
     public void removeFromFavourites();
+    public void addToPlan();
 }

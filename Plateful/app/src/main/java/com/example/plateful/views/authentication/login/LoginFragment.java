@@ -85,6 +85,7 @@ public class LoginFragment extends Fragment implements LoginView {
     public void loginFailure(String message) {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.alert_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertBinding.tvAlertMessage.setText(message);
         dialog.show();
         dialog.findViewById(R.id.btn_dismiss).setOnClickListener(vw1 -> {

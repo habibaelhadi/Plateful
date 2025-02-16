@@ -131,4 +131,19 @@ public class HomePresenterImp implements HomePresenter {
                 );
     }
 
+    @Override
+    public void addToPlan(MealsDatabase mealsDatabase) {
+        dataRepository.insert(mealsDatabase)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> {
+                            homeView.addToPlan();
+                        },
+                        error -> {
+                            homeView.showError(error.getMessage());
+                        }
+                );
+    }
+
 }

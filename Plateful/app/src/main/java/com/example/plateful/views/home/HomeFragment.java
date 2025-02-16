@@ -1,6 +1,8 @@
 package com.example.plateful.views.home;
 
 import static java.lang.Integer.parseInt;
+
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -24,6 +26,8 @@ import com.example.plateful.models.DTOs.AllIngredients;
 import com.example.plateful.models.db.MealsDatabase;
 import com.example.plateful.models.enums.ChipsTypes;
 import com.example.plateful.presenters.home.HomePresenterImp;
+import com.example.plateful.utils.DateUtil;
+import com.example.plateful.utils.ShowPlans;
 import com.example.plateful.views.adapters.AllIngredientsAdapter;
 import com.example.plateful.views.adapters.CategoryAdapter;
 import com.example.plateful.views.adapters.CountryAdapter;
@@ -37,7 +41,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements HomeView,NavigateToFragments{
+public class HomeFragment extends Fragment implements HomeView,NavigateToFragments,ShowPlans{
 
     CategoryAdapter categoryAdapter;
     CountryAdapter countryAdapter;
@@ -49,6 +53,14 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
     AllIngredientsAdapter ingredientsAdapter;
     MealDTO meal;
     boolean isFavourite = false;
+    private ShowPlans showPlans;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        showPlans = this;
+        DateUtil.showPlans = showPlans;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -181,6 +193,10 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
                isFavourite = false;
            }
         });
+
+        binding.addToPlan.setOnClickListener(vw -> {
+            DateUtil.showCalendarPicker(meal,getParentFragmentManager());
+        });
     }
 
     @Override
@@ -251,6 +267,13 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
     @Override
     public void removeFromFavourites() {binding.addToFavourites.setText(R.string.add_to_favourites);}
 
+    @SuppressLint("ResourceAsColor")
+    @Override
+    public void addToPlan() {
+        binding.addToPlan.setEnabled(false);
+        binding.addToPlan.setBackgroundColor(R.color.card_color);
+    }
+
     private void updateViewVisibility(ChipsTypes type) {
         boolean showAll = (type == null);
 
@@ -277,5 +300,18 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void saveMealToPlan(MealDTO mealDTO, String date) {
+        MealsDatabase mealsDatabase = new MealsDatabase(
+                meal.getIdMeal(),
+                sharedPreferences.getString("id", ""),
+                date,
+                meal,
+                false,
+                true
+        );
+        homePresenterImp.addToPlan(mealsDatabase);
     }
 }

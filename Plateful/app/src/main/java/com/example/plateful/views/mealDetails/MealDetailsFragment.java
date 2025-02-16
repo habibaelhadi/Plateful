@@ -1,5 +1,6 @@
 package com.example.plateful.views.mealDetails;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -24,6 +25,8 @@ import com.example.plateful.databinding.AlertDialogBinding;
 import com.example.plateful.models.db.MealsDatabase;
 import com.example.plateful.presenters.mealsdetails.MealsDetailsPresenter;
 import com.example.plateful.presenters.mealsdetails.MealsDetailsPresenterImp;
+import com.example.plateful.utils.DateUtil;
+import com.example.plateful.utils.ShowPlans;
 import com.example.plateful.views.adapters.IngredientsAdapter;
 import com.example.plateful.databinding.FragmentMealDetailsBinding;
 import com.example.plateful.models.flag.FlagHelper;
@@ -38,14 +41,21 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class MealDetailsFragment extends Fragment implements MealDetailsView {
+public class MealDetailsFragment extends Fragment implements MealDetailsView, ShowPlans {
 
     FragmentMealDetailsBinding binding;
     IngredientsAdapter adapter;
     MealsDetailsPresenter presenter;
     boolean isSaved = false;
     SharedPreferences sharedPreferences;
+    private ShowPlans showPlans;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        showPlans = this;
+        DateUtil.showPlans = showPlans;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,7 +111,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         });
 
         binding.plan.setOnClickListener(vw -> {
-            showCalendarPicker(meal);
+            DateUtil.showCalendarPicker(meal,getParentFragmentManager());
         });
     }
 
@@ -151,9 +161,11 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         binding.save.setImageResource(R.drawable.ic_baseline_bookmark_border_24);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void addToPlan() {
-        binding.plan.setText(R.string.remove_from_plan);
+        binding.plan.setEnabled(false);
+        binding.plan.setBackgroundColor(R.color.plan_button_disabled);
     }
 
     private void showVideo(String youtubeUrl) {
@@ -175,51 +187,9 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         }
     }
 
-    private void showCalendarPicker(MealDTO mealDTO) {
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Africa/Cairo"));
 
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-        long startOfWeek = calendar.getTimeInMillis();
-
-        calendar.add(Calendar.DAY_OF_WEEK, 6);
-        long endOfWeek = calendar.getTimeInMillis();
-
-        CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
-        constraintsBuilder.setStart(startOfWeek);
-        constraintsBuilder.setEnd(endOfWeek);
-        constraintsBuilder.setValidator(new CalendarConstraints.DateValidator() {
-            @Override
-            public boolean isValid(long date) {
-                return date >= startOfWeek && date <= endOfWeek;
-            }
-            @Override
-            public int describeContents() {
-                return 0;
-            }
-
-            @Override
-            public void writeToParcel(@NonNull Parcel parcel, int i) {
-
-            }
-        });
-
-        MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Select a day this week")
-                .setCalendarConstraints(constraintsBuilder.build())
-                .setSelection(MaterialDatePicker.todayInUtcMilliseconds()) // Default selection: today
-                .build();
-        datePicker.show(getParentFragmentManager(), "DATE_PICKER");
-
-        datePicker.addOnPositiveButtonClickListener(selection -> {
-            Calendar selectedCalendar = Calendar.getInstance(TimeZone.getTimeZone("Africa/Cairo"));
-            selectedCalendar.setTimeInMillis(selection);
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            String selectedDate = format.format(selectedCalendar.getTime());
-            saveMealToPlan(mealDTO,selectedDate);
-        });
-}
-
-    private void saveMealToPlan(MealDTO meal, String selectedDate) {
+    @Override
+    public void saveMealToPlan(MealDTO meal, String selectedDate) {
         MealsDatabase mealsDatabase = new MealsDatabase(
                 meal.getIdMeal(),
                 sharedPreferences.getString("id", ""),

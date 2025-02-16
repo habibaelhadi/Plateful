@@ -7,6 +7,9 @@ import com.example.plateful.models.repository.DataRepository;
 import com.example.plateful.network.APIRemoteDataSource;
 import com.example.plateful.views.plan.PlanView;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class PlanPresenterImp implements PlanPresenter{
     private PlanView view;
     private DataRepository repository;
@@ -16,4 +19,18 @@ public class PlanPresenterImp implements PlanPresenter{
         repository = DataRepository.getInstance(context);
     }
 
+    @Override
+    public void getAllPlans() {
+        repository.getAllPlans()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        list -> {
+                            view.showPlans(list);
+                        },
+                        error -> {
+                            view.showError(error.getMessage());
+                        }
+                );
+    }
 }
