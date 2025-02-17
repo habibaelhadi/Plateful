@@ -77,6 +77,11 @@ public class IntroFragment extends Fragment implements IntroView{
         binding.loginBtnIntro.setOnClickListener(vw -> {
             Navigation.findNavController(view).navigate(R.id.action_introFragment_to_loginFragment);
         });
+
+        binding.guestBtn.setOnClickListener(vw -> {
+            sharedPreferences.edit().putString("id","guest").apply();
+            Navigation.findNavController(view).navigate(R.id.action_introFragment_to_homeFragment);
+        });
     }
 
     @Override

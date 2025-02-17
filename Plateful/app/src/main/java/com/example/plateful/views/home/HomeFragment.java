@@ -1,7 +1,6 @@
 package com.example.plateful.views.home;
 
 import static java.lang.Integer.parseInt;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.SharedPreferences;
@@ -22,7 +21,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.plateful.MainActivity;
 import com.example.plateful.R;
-import com.example.plateful.databinding.AlertDialogBinding;
 import com.example.plateful.models.DTOs.AllIngredients;
 import com.example.plateful.models.db.MealsDatabase;
 import com.example.plateful.models.enums.ChipsTypes;
@@ -39,7 +37,6 @@ import com.example.plateful.models.DTOs.MealDTO;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeView,NavigateToFragments,ShowPlans,LoadingData{
@@ -169,7 +166,18 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
         });
 
         binding.addToFavourites.setOnClickListener(vw -> {
-           if(!isFavourite){
+            if(sharedPreferences.getString("id","").equals("guest")){
+                Dialog dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.alert_dialog);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                TextView message = dialog.findViewById(R.id.tv_alert_message);
+                message.setText(R.string.sign_up_for_more_features);
+                dialog.show();
+                dialog.findViewById(R.id.btn_dismiss).setOnClickListener(vw1 -> {
+                    dialog.dismiss();
+                });
+            }
+           else if(!isFavourite){
                MealsDatabase mealsDatabase = new MealsDatabase(
                        meal.getIdMeal(),
                        sharedPreferences.getString("id",""),
@@ -197,7 +205,19 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
         });
 
         binding.addToPlan.setOnClickListener(vw -> {
-            DateUtil.showCalendarPicker(meal,getParentFragmentManager());
+            if(sharedPreferences.getString("id","").equals("guest")){
+                Dialog dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.alert_dialog);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                TextView message = dialog.findViewById(R.id.tv_alert_message);
+                message.setText(R.string.sign_up_for_more_features);
+                dialog.show();
+                dialog.findViewById(R.id.btn_dismiss).setOnClickListener(vw1 -> {
+                    dialog.dismiss();
+                });
+            }else{
+                DateUtil.showCalendarPicker(meal,getParentFragmentManager());
+            }
         });
     }
 
@@ -219,8 +239,20 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
         binding.areaTitle.setText(meal.getStrArea());
         binding.categoryTitle.setText(meal.getStrCategory());
         binding.dailyMeal.setOnClickListener(vw -> {
-            int id = parseInt(meal.getIdMeal());
-            navigateToDetails(meal, id);
+            if(sharedPreferences.getString("id","").equals("guest")){
+                Dialog dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.alert_dialog);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                TextView message = dialog.findViewById(R.id.tv_alert_message);
+                message.setText(R.string.sign_up_for_more_features);
+                dialog.show();
+                dialog.findViewById(R.id.btn_dismiss).setOnClickListener(vw1 -> {
+                    dialog.dismiss();
+                });
+            }else{
+                int id = parseInt(meal.getIdMeal());
+                navigateToDetails(meal, id);
+            }
         });
         this.meal = meal;
     }

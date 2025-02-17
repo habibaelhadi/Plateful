@@ -1,6 +1,10 @@
 package com.example.plateful.views.adapters;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +27,14 @@ public class CategoryAreaMealsAdapter extends RecyclerView.Adapter<CategoryAreaM
     private Context context;
     public String name;
     NavigateToFragments navigateToFragments;
+    SharedPreferences sharedPreferences;
 
     public CategoryAreaMealsAdapter(Context context, List<MealCategoryAreaDTO> meals, String categoryAreaName, NavigateToFragments navigateToFragments) {
         this.context = context;
         this.meals = meals;
         name = categoryAreaName;
         this.navigateToFragments = navigateToFragments;
+        sharedPreferences = context.getSharedPreferences("MyPrefs",0);
     }
 
     @NonNull
@@ -44,7 +50,19 @@ public class CategoryAreaMealsAdapter extends RecyclerView.Adapter<CategoryAreaM
         MealCategoryAreaDTO meal = meals.get(position);
         holder.onBind(meals.get(position));
         holder.cardView.setOnClickListener(v -> {
-            navigateToFragments.navigateToDetails(Integer.parseInt(meal.getIdMeal()),null);
+            if(sharedPreferences.getString("id","").equals("guest")){
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.alert_dialog);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                TextView message = dialog.findViewById(R.id.tv_alert_message);
+                message.setText(R.string.sign_up_for_more_features);
+                dialog.show();
+                dialog.findViewById(R.id.btn_dismiss).setOnClickListener(vw1 -> {
+                    dialog.dismiss();
+                });
+            }else{
+                navigateToFragments.navigateToDetails(Integer.parseInt(meal.getIdMeal()),null);
+            }
         });
 
     }
