@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +16,17 @@ import android.view.ViewGroup;
 
 import com.example.plateful.R;
 import com.example.plateful.databinding.FragmentFavouriteBinding;
+import com.example.plateful.models.DTOs.MealDTO;
 import com.example.plateful.models.db.MealsDatabase;
 import com.example.plateful.presenters.favourites.FavouritesPresenter;
 import com.example.plateful.presenters.favourites.FavouritesPresenterImp;
 import com.example.plateful.views.adapters.FavouritesAdapter;
+import com.example.plateful.views.home.NavigateToFragments;
+import com.example.plateful.views.mealslist.CategoryAreaListFragmentDirections;
 
 import java.util.List;
 
-public class FavouriteFragment extends Fragment implements FavouriteView{
+public class FavouriteFragment extends Fragment implements FavouriteView, NavigateToFragments {
     FragmentFavouriteBinding binding;
     FavouritesAdapter adapter;
     FavouritesPresenter presenter;
@@ -63,7 +67,7 @@ public class FavouriteFragment extends Fragment implements FavouriteView{
             binding.recyclerFav.setVisibility(View.GONE);
             binding.noFavGroup.setVisibility(View.VISIBLE);
         }else{
-            adapter = new FavouritesAdapter(favourites,requireContext());
+            adapter = new FavouritesAdapter(favourites,requireContext(),this);
             binding.noFavGroup.setVisibility(View.GONE);
             binding.recyclerFav.setVisibility(View.VISIBLE);
             binding.recyclerFav.setAdapter(adapter);
@@ -82,5 +86,11 @@ public class FavouriteFragment extends Fragment implements FavouriteView{
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setTitle(errorMessage);
         dialog.show();
+    }
+
+    @Override
+    public void navigateToDetails(int id, MealDTO meal){
+        NavigateToFragments.super.navigateToDetails(id, meal);
+        Navigation.findNavController(requireView()).navigate(FavouriteFragmentDirections.actionFavouriteFragmentToMealDetailsFragment(id,meal));
     }
 }

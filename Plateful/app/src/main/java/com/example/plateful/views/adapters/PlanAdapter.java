@@ -11,15 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.plateful.R;
 import com.example.plateful.models.db.MealsDatabase;
+import com.example.plateful.views.home.NavigateToFragments;
+import com.google.android.material.card.MaterialCardView;
+
 import java.util.List;
 
 public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanHolder>{
     List<MealsDatabase> mealsDatabases;
     Context context;
+    NavigateToFragments navigateToFragments;
 
-    public PlanAdapter(List<MealsDatabase> mealsDatabases, Context context) {
+    public PlanAdapter(List<MealsDatabase> mealsDatabases, Context context,NavigateToFragments navigateToFragments) {
         this.mealsDatabases = mealsDatabases;
         this.context = context;
+        this.navigateToFragments = navigateToFragments;
     }
 
     @NonNull
@@ -43,10 +48,12 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanHolder>{
     public class PlanHolder extends RecyclerView.ViewHolder{
         ImageView image;
         TextView title;
+        MaterialCardView card;
         public PlanHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.meal_image);
             title = itemView.findViewById(R.id.meal_title);
+            card = itemView.findViewById(R.id.plan_card);
         }
 
         public void onBind(MealsDatabase mealsDatabase){
@@ -54,6 +61,9 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanHolder>{
                     .load(mealsDatabase.getMeal().getStrMealThumb())
                     .into(image);
             title.setText(mealsDatabase.getMeal().getStrMeal());
+            card.setOnClickListener(vw -> {
+                navigateToFragments.navigateToDetails(Integer.parseInt(mealsDatabase.getMeal().getIdMeal()),mealsDatabase.getMeal());
+            });
         }
     }
 }

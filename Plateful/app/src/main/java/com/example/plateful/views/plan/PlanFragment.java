@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,15 +18,17 @@ import android.widget.TextView;
 import com.example.plateful.R;
 import com.example.plateful.databinding.AlertDialogBinding;
 import com.example.plateful.databinding.FragmentPlanBinding;
+import com.example.plateful.models.DTOs.MealDTO;
 import com.example.plateful.models.db.MealsDatabase;
 import com.example.plateful.presenters.plan.PlanPresenter;
 import com.example.plateful.presenters.plan.PlanPresenterImp;
 import com.example.plateful.views.adapters.PlanAdapter;
+import com.example.plateful.views.home.NavigateToFragments;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlanFragment extends Fragment implements PlanView{
+public class PlanFragment extends Fragment implements PlanView, NavigateToFragments {
 
     FragmentPlanBinding binding;
     PlanPresenter planPresenter;
@@ -77,7 +80,7 @@ public class PlanFragment extends Fragment implements PlanView{
             switch (mealDatabase.getDate()){
                 case "Saturday":{
                     saturdayMeals.add(mealDatabase);
-                    adapter = new PlanAdapter(saturdayMeals,requireContext());
+                    adapter = new PlanAdapter(saturdayMeals,requireContext(),this);
                     binding.saturdayRecycler.setVisibility(View.VISIBLE);
                     binding.saturdayRecycler.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
@@ -85,7 +88,7 @@ public class PlanFragment extends Fragment implements PlanView{
                 }
                 case "Sunday":{
                     sundayMeals.add(mealDatabase);
-                    adapter = new PlanAdapter(sundayMeals,requireContext());
+                    adapter = new PlanAdapter(sundayMeals,requireContext(),this);
                     binding.sundayRecycler.setVisibility(View.VISIBLE);
                     binding.sundayRecycler.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
@@ -93,7 +96,7 @@ public class PlanFragment extends Fragment implements PlanView{
                 }
                 case "Monday":{
                     mondayMeals.add(mealDatabase);
-                    adapter = new PlanAdapter(mondayMeals,requireContext());
+                    adapter = new PlanAdapter(sundayMeals,requireContext(),this);
                     binding.mondayRecycler.setVisibility(View.VISIBLE);
                     binding.mondayRecycler.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
@@ -101,7 +104,7 @@ public class PlanFragment extends Fragment implements PlanView{
                 }
                 case "Tuesday":{
                     tuesdayMeals.add(mealDatabase);
-                    adapter = new PlanAdapter(tuesdayMeals,requireContext());
+                    adapter = new PlanAdapter(sundayMeals,requireContext(),this);
                     binding.tuesdayRecycler.setVisibility(View.VISIBLE);
                     binding.tuesdayRecycler.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
@@ -109,7 +112,7 @@ public class PlanFragment extends Fragment implements PlanView{
                 }
                 case "Wednesday":{
                     wednesdayMeals.add(mealDatabase);
-                    adapter = new PlanAdapter(wednesdayMeals,requireContext());
+                    adapter = new PlanAdapter(sundayMeals,requireContext(),this);
                     binding.wednesdayRecycler.setVisibility(View.VISIBLE);
                     binding.wednesdayRecycler.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
@@ -117,7 +120,7 @@ public class PlanFragment extends Fragment implements PlanView{
                 }
                 case "Thursday":{
                     thursdayMeals.add(mealDatabase);
-                    adapter = new PlanAdapter(thursdayMeals,requireContext());
+                    adapter = new PlanAdapter(sundayMeals,requireContext(),this);
                     binding.thursdayRecycler.setVisibility(View.VISIBLE);
                     binding.thursdayRecycler.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
@@ -125,7 +128,7 @@ public class PlanFragment extends Fragment implements PlanView{
                 }
                 case "Friday":{
                     fridayMeals.add(mealDatabase);
-                    adapter = new PlanAdapter(fridayMeals,requireContext());
+                    adapter = new PlanAdapter(sundayMeals,requireContext(),this);
                     binding.fridayRecycler.setVisibility(View.VISIBLE);
                     binding.fridayRecycler.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
@@ -144,4 +147,11 @@ public class PlanFragment extends Fragment implements PlanView{
         binding.tvAlertMessage.setText(message);
         dialog.show();
     }
+
+    @Override
+    public void navigateToDetails(int id, MealDTO meal){
+        NavigateToFragments.super.navigateToDetails(id, meal);
+        Navigation.findNavController(requireView()).navigate(PlanFragmentDirections.actionPlanFragment2ToMealDetailsFragment(id,meal));
+    }
+
 }

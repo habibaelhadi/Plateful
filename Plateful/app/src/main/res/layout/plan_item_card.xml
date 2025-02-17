@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="128dp"
-    android:layout_height="128dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/plan_card"
+    android:layout_width="128dp"
+    android:layout_height="128dp"
+    android:layout_margin="8dp"
     app:cardCornerRadius="12dp"
-    app:strokeWidth="0dp"
     app:cardElevation="4dp"
-    android:layout_margin="8dp">
+    app:strokeWidth="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,15 +25,15 @@
             android:id="@+id/meal_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="Meal Title Text View"
-            android:fontFamily="@font/capriola"
-            android:textSize="14sp"
-            android:textColor="@color/white"
             android:background="@color/obacity_black"
-            android:padding="4dp"/>
+            android:fontFamily="@font/capriola"
+            android:padding="4dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Meal Title Text View" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

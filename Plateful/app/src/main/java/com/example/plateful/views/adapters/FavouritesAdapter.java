@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.plateful.R;
 import com.example.plateful.models.db.MealsDatabase;
+import com.example.plateful.views.home.NavigateToFragments;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -22,14 +24,16 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
     private List<MealsDatabase> meals;
     Context context;
     ButtonOnClick buttonOnClick;
+    NavigateToFragments navigateToFragments;
 
     public void setButtonOnClick(ButtonOnClick buttonOnClick) {
         this.buttonOnClick = buttonOnClick;
     }
 
-    public FavouritesAdapter(List<MealsDatabase> meals, Context context) {
+    public FavouritesAdapter(List<MealsDatabase> meals, Context context,NavigateToFragments navigateToFragments) {
         this.meals = meals;
         this.context = context;
+        this.navigateToFragments = navigateToFragments;
     }
 
     @NonNull
@@ -57,6 +61,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
         TextView category;
         Button removeFromFav;
         Button addToPlan;
+        MaterialCardView card;
 
         public FavouriteHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,6 +70,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
             category = itemView.findViewById(R.id.name_of_area_or_category);
             removeFromFav = itemView.findViewById(R.id.add_to_favourites_list_page);
             addToPlan = itemView.findViewById(R.id.add_to_plan_list_page);
+            card = itemView.findViewById(R.id.card_list);
         }
 
         public void onBind(MealsDatabase mealsDatabase){
@@ -75,8 +81,13 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
                     .load(mealsDatabase.getMeal().getStrMealThumb())
                     .into(image);
             addToPlan.setVisibility(View.GONE);
+
             removeFromFav.setOnClickListener(vw -> {
                 buttonOnClick.setOnClick(mealsDatabase);
+            });
+
+            card.setOnClickListener(vw -> {
+                navigateToFragments.navigateToDetails(Integer.parseInt(mealsDatabase.getMeal().getIdMeal()),mealsDatabase.getMeal());
             });
         }
     }
