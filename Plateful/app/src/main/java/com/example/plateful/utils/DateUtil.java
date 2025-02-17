@@ -21,12 +21,12 @@ public class DateUtil{
 
     public static ShowPlans showPlans;
     public static void showCalendarPicker(MealDTO mealDTO, FragmentManager fragmentManager) {
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Africa/Cairo"));
 
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+        Calendar calendar = Calendar.getInstance();
+
         long startOfWeek = calendar.getTimeInMillis();
 
-        calendar.add(Calendar.DAY_OF_WEEK, 6);
+        calendar.add(Calendar.DAY_OF_WEEK, 7);
         long endOfWeek = calendar.getTimeInMillis();
 
         CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();

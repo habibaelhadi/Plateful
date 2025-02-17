@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.example.plateful.MainActivity;
 import com.example.plateful.R;
 import com.example.plateful.databinding.AlertDialogBinding;
 import com.example.plateful.models.DTOs.AllIngredients;
@@ -41,13 +42,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements HomeView,NavigateToFragments,ShowPlans{
+public class HomeFragment extends Fragment implements HomeView,NavigateToFragments,ShowPlans,LoadingData{
 
     CategoryAdapter categoryAdapter;
     CountryAdapter countryAdapter;
     FragmentHomeBinding binding;
     HomePresenterImp homePresenterImp;
-    AlertDialogBinding alertBinding;
     SharedPreferences sharedPreferences;
     ChipsTypes chipsTypes;
     AllIngredientsAdapter ingredientsAdapter;
@@ -78,6 +78,8 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
         EditText searchEditText = binding.searchView.findViewById(androidx.appcompat.R.id.search_src_text);
         searchEditText.setTextColor(Color.BLACK);
 
+        ((MainActivity) requireActivity()).setLoadingData(this);
+
         sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", 0);
 
         categoryAdapter = new CategoryAdapter(requireContext(),new ArrayList<>(),this);
@@ -89,12 +91,9 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
         ingredientsAdapter = new AllIngredientsAdapter(requireContext(), new ArrayList<>(), this);
         binding.recyclerViewIngredientsHome.setAdapter(ingredientsAdapter);
 
+
         homePresenterImp = new HomePresenterImp(this,requireContext());
-        homePresenterImp.getDataFromFirebase();
-        homePresenterImp.getDailyMeal();
-        homePresenterImp.getCategories();
-        homePresenterImp.getCountry();
-        homePresenterImp.getIngredients();
+        updateData();
 
 
         binding.avatar.setOnClickListener(vw -> {
@@ -202,15 +201,26 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
         });
     }
 
+    private void updateData() {
+        homePresenterImp.getDataFromFirebase();
+        homePresenterImp.getDailyMeal();
+        homePresenterImp.getCategories();
+        homePresenterImp.getCountry();
+        homePresenterImp.getIngredients();
+    }
+
     @Override
     public void showDailyMeal(MealDTO meal) {
+        if (binding == null) {
+            return;
+        }
         Glide.with(getContext()).load(meal.getStrMealThumb()).into(binding.mealImage);
         binding.mealTitle.setText(meal.getStrMeal());
         binding.areaTitle.setText(meal.getStrArea());
         binding.categoryTitle.setText(meal.getStrCategory());
         binding.dailyMeal.setOnClickListener(vw -> {
             int id = parseInt(meal.getIdMeal());
-            navigateToDetails(meal,id);
+            navigateToDetails(meal, id);
         });
         this.meal = meal;
     }
@@ -233,13 +243,10 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
         ingredientsAdapter.notifyDataSetChanged();
     }
 
+
     @Override
     public void showError(String errorMessage) {
-        Dialog dialog = new Dialog(requireContext());
-        dialog.setContentView(R.layout.alert_dialog);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        alertBinding.tvAlertMessage.setText(errorMessage);
-        dialog.show();
+
     }
 
     @Override
@@ -317,5 +324,10 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
         );
         homePresenterImp.addToPlan(mealsDatabase);
         homePresenterImp.backupData(mealsDatabase);
+    }
+
+    @Override
+    public void loadData() {
+        updateData();
     }
 }
