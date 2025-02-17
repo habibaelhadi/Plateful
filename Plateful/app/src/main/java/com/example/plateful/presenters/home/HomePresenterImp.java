@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -38,6 +39,7 @@ public class HomePresenterImp implements HomePresenter {
     FirebaseDatabase database;
     DatabaseReference myRef;
     SharedPreferences sharedPreferences;
+    Context context;
 
     public HomePresenterImp(HomeView homeView, Context context) {
         this.homeView = homeView;
@@ -46,6 +48,7 @@ public class HomePresenterImp implements HomePresenter {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("meals");
         sharedPreferences = context.getSharedPreferences("MyPrefs",0);
+        this.context = context;
     }
 
     @Override
@@ -111,9 +114,36 @@ public class HomePresenterImp implements HomePresenter {
 
     @Override
     public void logout() {
+        clearApplicationCache();
+        sharedPreferences.edit().clear().apply();
         firebase.logout();
         homeView.logout();
     }
+
+    private void clearApplicationCache() {
+        try {
+            File cacheDir = context.getCacheDir();
+            if (cacheDir != null && cacheDir.isDirectory()) {
+                deleteDir(cacheDir);
+            }
+        } catch (Exception e) {
+            Log.e("CACHE_CLEAR", "Failed to clear cache", e);
+        }
+    }
+
+    private boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (String child : children) {
+                boolean success = deleteDir(new File(dir, child));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+        return dir.delete();
+    }
+
 
     @Override
     public void addToFavourites(MealsDatabase mealsDatabase) {
@@ -181,6 +211,14 @@ public class HomePresenterImp implements HomePresenter {
                 .child(mealsDatabase.getMealId())
                 .child(mealsDatabase.getDate())
                 .removeValue();
+    }
+
+    @Override
+    public void deleteAll() {
+        dataRepository.deleteAll()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
 }

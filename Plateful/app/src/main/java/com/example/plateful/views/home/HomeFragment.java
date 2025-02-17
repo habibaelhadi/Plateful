@@ -103,6 +103,7 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
                 if(item.getItemId() == R.id.logout_drawable){
                     binding.drawer.close();
                     homePresenterImp.logout();
+                    homePresenterImp.deleteAll();
                 }
                 return false;
             }

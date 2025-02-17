@@ -26,10 +26,11 @@ public class DatabaseLocalDataSource {
     SharedPreferences sharedPreferences;
     FirebaseDatabase database;
     DatabaseReference myRef;
+
     private DatabaseLocalDataSource(Context context) {
         appDatabase = AppDatabase.getInstance(context);
         foodDAO = appDatabase.getData();
-        sharedPreferences = context.getSharedPreferences("MyPrefs",0);
+        sharedPreferences = context.getSharedPreferences("MyPrefs", 0);
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("meals");
     }
@@ -41,36 +42,49 @@ public class DatabaseLocalDataSource {
         return databaseLocalDataSource;
     }
 
-    public Single<List<MealsDatabase>> getAllFavourites() {return foodDAO.getAllFavourites();}
+    public Single<List<MealsDatabase>> getAllFavourites() {
+        return foodDAO.getAllFavourites();
+    }
 
-    public Single<List<MealsDatabase>> getAllPlans() {return foodDAO.getAllPlans();}
+    public Single<List<MealsDatabase>> getAllPlans() {
+        return foodDAO.getAllPlans();
+    }
 
-    public Completable insert(MealsDatabase mealsDatabase) {return foodDAO.insert(mealsDatabase);}
+    public Completable insert(MealsDatabase mealsDatabase) {
+        return foodDAO.insert(mealsDatabase);
+    }
 
-    public Completable delete(MealsDatabase mealsDatabase) {return foodDAO.delete(mealsDatabase);}
+    public Completable delete(MealsDatabase mealsDatabase) {
+        return foodDAO.delete(mealsDatabase);
+    }
+
+    public Completable deleteAll(){return foodDAO.deleteAllMeals();}
 
     public void fetchDataFromFirebase() {
         String id = sharedPreferences.getString("id", null);
-        myRef.child("Users").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.i("MainActivity", "onDataChange: " + dataSnapshot.getChildren());
-                for (DataSnapshot mealSnapshot : dataSnapshot.getChildren()) {
-                    for (DataSnapshot dateSnapshot : mealSnapshot.getChildren()) {
-                        MealsDatabase mealsDatabase = dateSnapshot.getValue(MealsDatabase.class);
-                        if (mealsDatabase != null) {
-                            // Insert the meal into the Room database
-                            foodDAO.insert(mealsDatabase).subscribeOn(Schedulers.io()).subscribe();
+        if (id != null) {
+            myRef.child("Users").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Log.i("MainActivity", "onDataChange: " + dataSnapshot.getChildren());
+                    for (DataSnapshot mealSnapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot dateSnapshot : mealSnapshot.getChildren()) {
+                            MealsDatabase mealsDatabase = dateSnapshot.getValue(MealsDatabase.class);
+                            if (mealsDatabase != null) {
+                                // Insert the meal into the Room database
+                                foodDAO.insert(mealsDatabase).subscribeOn(Schedulers.io()).subscribe();
+                            }
                         }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("SavedMealsRepository", "Error fetching data from Firebase", error.toException());
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.e("SavedMealsRepository", "Error fetching data from Firebase", error.toException());
+                }
+            });
+        }
     }
+
 
 }

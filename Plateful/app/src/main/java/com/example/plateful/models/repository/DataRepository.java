@@ -63,6 +63,8 @@ public class DataRepository {
 
     public Completable delete(MealsDatabase mealsDatabase) {return databaseLocalDataSource.delete(mealsDatabase);}
 
+    public Completable deleteAll(){return databaseLocalDataSource.deleteAll();}
+
     public void fetchDataFromFirebase() {
         databaseLocalDataSource.fetchDataFromFirebase();
     }

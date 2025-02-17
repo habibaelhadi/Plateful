@@ -14,4 +14,5 @@ public interface HomePresenter {
     public void getDataFromFirebase();
     public void backupData(MealsDatabase mealsDatabase);
     public void removeFromFirebase(MealsDatabase mealsDatabase);
+    public void deleteAll();
 }
