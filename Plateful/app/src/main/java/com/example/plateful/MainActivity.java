@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private ConnectivityManager connectivityManager;
     LoadingData loadingData;
     boolean isNetwork = true;
+    boolean wasNetworkLost = false;
 
 
     @Override
@@ -117,7 +118,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAvailable(@NonNull Network network) {
                 runOnUiThread(() ->{
-                    showSuccessSnackBar("Network is available");
+                    if (wasNetworkLost) {
+                        showSuccessSnackBar("Network is available");
+                        wasNetworkLost = false;
+                    }
                     binding.noInternet.setVisibility(View.GONE);
                     binding.noInternet.pauseAnimation();
                     binding.fragmentContainerView2.setVisibility(View.VISIBLE);
@@ -126,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 isNetwork = true;
+
             }
 
             @Override
@@ -144,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                isNetwork = false;
+               wasNetworkLost = true;
             }
 
         };
@@ -166,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) snackbarView.getLayoutParams();
         params.gravity = Gravity.TOP;
+        params.topMargin = 150;
         snackbarView.setLayoutParams(params);
 
         snackbar.show();
@@ -181,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) snackbarView.getLayoutParams();
         params.gravity = Gravity.TOP;
+        params.topMargin = 150;
         snackbarView.setLayoutParams(params);
 
         snackbar.show();
