@@ -7,6 +7,7 @@ import com.example.plateful.models.DTOs.AllIngredients;
 import com.example.plateful.models.DTOs.CategoryDTO;
 import com.example.plateful.models.DTOs.CountryDTO;
 import com.example.plateful.models.DTOs.DailyMealDTO;
+import com.example.plateful.models.DTOs.MealCategoryAreaDTO;
 import com.example.plateful.models.DTOs.MealDetailsResponse;
 import com.example.plateful.models.DTOs.MealsCategoryAreaResponse;
 import com.example.plateful.models.db.MealsDatabase;
@@ -51,6 +52,10 @@ public class DataRepository {
 
     public Single<MealDetailsResponse> getMealDetails(String id){
         return apiRemoteDataSource.getMealDetails(id);
+    }
+
+    public  Single<MealsCategoryAreaResponse> getMealsByIngredients(String ingredient){
+        return apiRemoteDataSource.getMealsByIngredients(ingredient);
     }
 
     public Observable<AllIngredients> getAllIngredients(){ return apiRemoteDataSource.getAllIngredients();}

@@ -109,14 +109,25 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
             }
         });
 
-        binding.hello.setText("Hello! Habiba");
+
 
         View header = binding.nav.getHeaderView(0);
-        TextView name = header.findViewById(R.id.username_header);
-        TextView email = header.findViewById(R.id.email_header);
+        TextView nameHeader = header.findViewById(R.id.username_header);
+        TextView emailHeader = header.findViewById(R.id.email_header);
+        String name = sharedPreferences.getString("username","");
+        String email = sharedPreferences.getString("email","");
 
-        name.setText("Habiba Elhadi");
-        email.setText("habibaelhadi9@gmail.com");
+
+        if(sharedPreferences.getString("id","").equals("guest")){
+            binding.hello.setText(R.string.hello_guest);
+            nameHeader.setText(R.string.guest);
+            emailHeader.setText(R.string.guest);
+        }else{
+            binding.hello.setText("Hello! "+name);
+            nameHeader.setText(name);
+            emailHeader.setText(email);
+        }
+
 
         binding.searchView.setOnSearchClickListener(vw -> {
             binding.chipGroup.setVisibility(View.VISIBLE);
@@ -190,7 +201,8 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
                homePresenterImp.addToFavourites(mealsDatabase);
                homePresenterImp.backupData(mealsDatabase);
                isFavourite = true;
-           }else{
+           }
+           else{
                MealsDatabase mealsDatabase = new MealsDatabase(
                        meal.getIdMeal(),
                        sharedPreferences.getString("id",""),
@@ -284,12 +296,12 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
 
     @Override
     public void navigateToDetails(MealDTO meal, int id){
-        Navigation.findNavController(requireView()).navigate(HomeFragmentDirections.actionHomeFragmentToMealDetailsFragment(id,meal));
+        Navigation.findNavController(requireView()).navigate(HomeFragmentDirections.actionHomeFragmentToMealDetailsFragment(id,meal,false,false));
     }
 
     @Override
-    public void navigateToMeals(String category, String area){
-        Navigation.findNavController(requireView()).navigate(HomeFragmentDirections.actionHomeFragmentToCategoryAreaListFragment(category,area));
+    public void navigateToMeals(String category, String area,String ingredient){
+        Navigation.findNavController(requireView()).navigate(HomeFragmentDirections.actionHomeFragmentToCategoryAreaListFragment(category,area,ingredient));
     }
 
     private void manageDrawer(){
@@ -315,6 +327,24 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
     public void addToPlan() {
         binding.addToPlan.setEnabled(false);
         binding.addToPlan.setBackgroundColor(R.color.card_color);
+    }
+
+    @Override
+    public void showProgress() {
+        if(binding != null){
+            binding.scroll.setVisibility(View.GONE);
+            binding.progress.setVisibility(View.VISIBLE);
+            binding.progress.playAnimation();
+        }
+    }
+
+    @Override
+    public void hideProgress() {
+       if(binding != null){
+           binding.scroll.setVisibility(View.VISIBLE);
+           binding.progress.setVisibility(View.GONE);
+           binding.progress.pauseAnimation();
+       }
     }
 
     private void updateViewVisibility(ChipsTypes type) {

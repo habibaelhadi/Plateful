@@ -99,6 +99,10 @@ public class AllIngredientsAdapter extends RecyclerView.Adapter<AllIngredientsAd
             Glide.with(itemView.getContext())
                     .load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient()+".png")
                     .into(image);
+
+            card.setOnClickListener(vw -> {
+                navigateToFragments.navigateToMeals(null,null,ingredient.getStrIngredient());
+            });
         }
     }
 

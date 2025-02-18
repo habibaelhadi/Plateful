@@ -49,6 +49,22 @@ public class MealsListPresenterImp implements MealsListPresenter{
     }
 
     @Override
+    public void getMealsByIngredients(String ingredient) {
+        repository.getMealsByIngredients(ingredient)
+                .subscribeOn(Schedulers.io())
+                .map(mealsCategoryAreaResponse -> mealsCategoryAreaResponse.getMeals())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        list -> {
+                            view.showMeals(list);
+                        },
+                        error -> {
+                            view.showError(error.getMessage());
+                        }
+                );
+    }
+
+    @Override
     public void addToFavourites(MealsDatabase mealsDatabase) {
         repository.insert(mealsDatabase)
                 .subscribeOn(Schedulers.io())

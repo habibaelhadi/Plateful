@@ -53,14 +53,17 @@ public class HomePresenterImp implements HomePresenter {
 
     @Override
     public void getDailyMeal() {
+        homeView.showProgress();
         dataRepository.getDailyMeal()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         success -> {
+                            homeView.hideProgress();
                             homeView.showDailyMeal(success.getMeals().get(0));
                         },
                         error -> {
+                            homeView.hideProgress();
                             homeView.showError(error.getMessage());
                         }
                 );
@@ -68,14 +71,17 @@ public class HomePresenterImp implements HomePresenter {
 
     @Override
     public void getCategories() {
+        homeView.showProgress();
         dataRepository.getCategories()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         success -> {
+                            homeView.hideProgress();
                             homeView.showCategories(success.getCategories());
                         },
                         error -> {
+                            homeView.hideProgress();
                             homeView.showError(error.getMessage());
                         }
                 );
@@ -83,14 +89,17 @@ public class HomePresenterImp implements HomePresenter {
 
     @Override
     public void getCountry() {
+        homeView.showProgress();
         dataRepository.getCountry()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         success -> {
+                            homeView.hideProgress();
                             homeView.showCountries(success.getMeals());
                         },
                         error -> {
+                            homeView.hideProgress();
                             homeView.showError(error.getMessage());
                         }
                 );
@@ -98,15 +107,18 @@ public class HomePresenterImp implements HomePresenter {
 
     @Override
     public void getIngredients() {
+        homeView.showProgress();
         dataRepository.getAllIngredients()
                 .subscribeOn(Schedulers.io())
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         success -> {
+                            homeView.hideProgress();
                             homeView.showIngredients(success.getMeals());
                         },
                         error -> {
+                            homeView.hideProgress();
                             homeView.showError(error.getMessage());
                         }
                 );

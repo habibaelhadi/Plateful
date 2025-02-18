@@ -91,6 +91,6 @@ public class FavouriteFragment extends Fragment implements FavouriteView, Naviga
     @Override
     public void navigateToDetails(int id, MealDTO meal){
         NavigateToFragments.super.navigateToDetails(id, meal);
-        Navigation.findNavController(requireView()).navigate(FavouriteFragmentDirections.actionFavouriteFragmentToMealDetailsFragment(id,meal));
+        Navigation.findNavController(requireView()).navigate(FavouriteFragmentDirections.actionFavouriteFragmentToMealDetailsFragment(id,meal,true,false));
     }
 }

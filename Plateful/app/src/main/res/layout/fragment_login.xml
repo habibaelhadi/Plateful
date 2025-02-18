@@ -42,7 +42,7 @@
         android:background="@drawable/rounded_background"
         android:drawableStart="@drawable/baseline_email_24"
         android:drawablePadding="10dp"
-        android:hint="@string/email_username"
+        android:hint="@string/email_login"
         android:textColor="@color/black"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"

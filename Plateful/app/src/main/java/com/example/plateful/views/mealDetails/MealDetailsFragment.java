@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -46,7 +47,8 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView, Sh
     FragmentMealDetailsBinding binding;
     IngredientsAdapter adapter;
     MealsDetailsPresenter presenter;
-    boolean isSaved = false;
+    boolean isSaved;
+    boolean isPlanned;
     SharedPreferences sharedPreferences;
     private ShowPlans showPlans;
 
@@ -73,6 +75,8 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView, Sh
 
         int id = MealDetailsFragmentArgs.fromBundle(getArguments()).getId();
         MealDTO meal = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealDTO();
+        isSaved = MealDetailsFragmentArgs.fromBundle(getArguments()).getIsSaved();
+        isPlanned = MealDetailsFragmentArgs.fromBundle(getArguments()).getIsPlanned();
         if(meal != null){
             showData(meal);
         }else{
@@ -84,6 +88,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView, Sh
         });
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void showData(MealDTO meal) {
         showVideo(meal.getStrYoutube());
@@ -91,35 +96,59 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView, Sh
         Glide.with(this)
                 .load(meal.getStrMealThumb())
                 .into(binding.mainImage);
-        if(meal.getStrTags() != null){
+        if (meal.getStrTags() != null) {
             binding.tags.setText(meal.getStrTags().toString());
-        }else{
+        } else {
             binding.tags.setVisibility(View.GONE);
         }
-        binding.categoryName.setText(FlagHelper.getFlagEmoji(meal.getStrArea())+" "+meal.getStrCategory());
+        binding.categoryName.setText(FlagHelper.getFlagEmoji(meal.getStrArea()) + " " + meal.getStrCategory());
         binding.areaName.setText(meal.getStrArea());
         Glide.with(this)
-                .load("https://www.themealdb.com/images/category/"+meal.getStrCategory()+".png")
+                .load("https://www.themealdb.com/images/category/" + meal.getStrCategory() + ".png")
                 .into(binding.categoryImage);
-        binding.items.setText(meal.getIngredients().size()+" items");
+        binding.items.setText(meal.getIngredients().size() + " items");
         binding.actualSteps.setText(meal.getStrInstructions());
         adapter = new IngredientsAdapter(meal.getIngredients());
         binding.ingredientsRecyclerView.setAdapter(adapter);
+
+        updateSaveButtonState(isSaved);
+        updatePlanButtonState(isPlanned);
 
         binding.save.setOnClickListener(vw -> {
             manageSaveButton(meal);
         });
 
         binding.plan.setOnClickListener(vw -> {
-            DateUtil.showCalendarPicker(meal,getParentFragmentManager());
+            if (binding.plan.isEnabled()) {
+                DateUtil.showCalendarPicker(meal, getParentFragmentManager());
+            }
         });
     }
 
-    private void manageSaveButton(MealDTO meal){
-        if(isSaved){
+    private void updateSaveButtonState(boolean isSaved) {
+        if (isSaved) {
+            binding.save.setImageResource(R.drawable.bookmark);
+        } else {
+            binding.save.setImageResource(R.drawable.ic_baseline_bookmark_border_24);
+        }
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private void updatePlanButtonState(boolean isPlanned) {
+        if (isPlanned) {
+            binding.plan.setEnabled(false);
+            binding.plan.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.plan_button_disabled));
+        } else {
+            binding.plan.setEnabled(true);
+            binding.plan.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.button_color));
+        }
+    }
+
+    private void manageSaveButton(MealDTO meal) {
+        if (isSaved) {
             MealsDatabase mealsDatabase = new MealsDatabase(
                     meal.getIdMeal(),
-                    sharedPreferences.getString("id",""),
+                    sharedPreferences.getString("id", ""),
                     "favourite",
                     meal,
                     true,
@@ -128,10 +157,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView, Sh
             presenter.removeFromFirebase(mealsDatabase);
             presenter.removeFromFavourites(mealsDatabase);
             isSaved = false;
-        }else{
+        } else {
             MealsDatabase mealsDatabase = new MealsDatabase(
                     meal.getIdMeal(),
-                    sharedPreferences.getString("id",""),
+                    sharedPreferences.getString("id", ""),
                     "favourite",
                     meal,
                     true,
@@ -141,7 +170,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView, Sh
             presenter.backupData(mealsDatabase);
             isSaved = true;
         }
+        // Update the save button state
+        updateSaveButtonState(isSaved);
     }
+
 
     @Override
     public void showError(String errorMessage) {

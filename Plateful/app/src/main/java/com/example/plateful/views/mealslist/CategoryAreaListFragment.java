@@ -10,9 +10,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.plateful.R;
 import com.example.plateful.databinding.AlertDialogBinding;
@@ -33,6 +35,7 @@ public class CategoryAreaListFragment extends Fragment implements CategoryAreaLi
     CategoryAreaListFragmentArgs args;
     String categoryName;
     String areaName;
+    String ingredientName;
     CategoryAreaMealsAdapter adapter;
 
     @Override
@@ -55,12 +58,16 @@ public class CategoryAreaListFragment extends Fragment implements CategoryAreaLi
         args = CategoryAreaListFragmentArgs.fromBundle(getArguments());
         categoryName = args.getCategoryName();
         areaName = args.getAreaName();
+        ingredientName = args.getIngredientName();
+
         presenter = new MealsListPresenterImp(this,requireContext());
 
         if(categoryName != null){
             presenter.getMealsByCategory(categoryName);
-        }else{
+        }else if(areaName != null){
             presenter.getMealsByArea(areaName);
+        }else{
+            presenter.getMealsByIngredients(ingredientName);
         }
     }
 
@@ -76,8 +83,12 @@ public class CategoryAreaListFragment extends Fragment implements CategoryAreaLi
             adapter = new CategoryAreaMealsAdapter(requireContext(),meals,categoryName,this);
             binding.recyclerMealList.setAdapter(adapter);
             adapter.notifyDataSetChanged();
-        }else{
+        }else if(areaName != null){
             adapter = new CategoryAreaMealsAdapter(requireContext(),meals,areaName,this);
+            binding.recyclerMealList.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }else{
+            adapter = new CategoryAreaMealsAdapter(requireContext(),meals,ingredientName,this);
             binding.recyclerMealList.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
@@ -85,12 +96,16 @@ public class CategoryAreaListFragment extends Fragment implements CategoryAreaLi
 
     @Override
     public void showError(String errorMessage) {
-        Dialog dialog = new Dialog(getContext());
-        dialog.setContentView(R.layout.alert_dialog);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        AlertDialogBinding binding = AlertDialogBinding.bind(dialog.getWindow().getDecorView());
-        binding.tvAlertMessage.setText(errorMessage);
-        dialog.show();
+//        Dialog dialog = new Dialog(getContext());
+//        dialog.setContentView(R.layout.alert_dialog);
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        TextView message = dialog.findViewById(R.id.tv_alert_message);
+//        message.setText(errorMessage);
+//        dialog.show();
+//        dialog.findViewById(R.id.btn_dismiss).setOnClickListener(vw1 -> {
+//            dialog.dismiss();
+//        });
+        Log.i("TAG", "showError: "+errorMessage);
     }
 
     @Override
@@ -101,6 +116,6 @@ public class CategoryAreaListFragment extends Fragment implements CategoryAreaLi
     @Override
     public void navigateToDetails(int id, MealDTO meal) {
         NavigateToFragments.super.navigateToDetails(id, meal);
-        Navigation.findNavController(requireView()).navigate(CategoryAreaListFragmentDirections.actionCategoryAreaListFragmentToMealDetailsFragment(id,meal));
+        Navigation.findNavController(requireView()).navigate(CategoryAreaListFragmentDirections.actionCategoryAreaListFragmentToMealDetailsFragment(id,meal,false,false));
     }
 }

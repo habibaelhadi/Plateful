@@ -2,6 +2,7 @@ package com.example.plateful.models.DTOs;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class AllIngredients {
@@ -17,7 +18,7 @@ public class AllIngredients {
         this.meals = meals;
     }
 
-    public static class Ingredients {
+    public static class Ingredients implements Serializable {
         private String idIngredient;
         private String strIngredient;
         private String strDescription;

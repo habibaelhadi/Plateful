@@ -1,6 +1,7 @@
 package com.example.plateful.presenters.authentication.login;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.example.plateful.db.DatabaseLocalDataSource;
 import com.example.plateful.models.firebase.Firebase;
@@ -13,11 +14,11 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginPresenterImp implements LoginPresenter {
     private LoginView view;
     private Firebase firebase;
-    private DataRepository repository;
+    private SharedPreferences sharedPreferences;
 
     public LoginPresenterImp(LoginView view, Context context) {
         this.view = view;
-        repository = DataRepository.getInstance(context);
+        sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         firebase = Firebase.getInstance();
     }
 
@@ -37,10 +38,15 @@ public class LoginPresenterImp implements LoginPresenter {
         });
     }
 
+
     @Override
-    public String getUserId() {
+    public void getUserName() {
         FirebaseUser currentUser = Firebase.auth.getCurrentUser();
-        String id = currentUser.getUid();
-        return id;
+        if (currentUser != null) {
+            sharedPreferences.edit().putString("id", currentUser.getUid()).apply();
+            sharedPreferences.edit().putString("username", currentUser.getDisplayName()).apply();
+            sharedPreferences.edit().putString("email", currentUser.getEmail()).apply();
+            sharedPreferences.edit().putBoolean("login", true).apply();
+        }
     }
 }

@@ -53,7 +53,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryH
         CountryDTO.MealsDTO country = countries.get(position);
         holder.onBind(countries.get(position));
         holder.card.setOnClickListener(vw -> {
-            navigateToFragments.navigateToMeals(null,country.getStrArea());
+            navigateToFragments.navigateToMeals(null,country.getStrArea(),null);
         });
     }
 

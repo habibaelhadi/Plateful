@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,21 +75,14 @@ public class SignUpFragment extends Fragment implements SignUpView {
     @Override
     public void signUpSuccess() {
         Navigation.findNavController(getView()).navigate(R.id.action_signUpFragment_to_homeFragment);
-        sharedPreferences.edit().putString("username", binding.username.getText().toString()).apply();
+        presenter.updateUserProfile(binding.username.getText().toString());
         sharedPreferences.edit().putString("email", binding.emailSignUp.getText().toString()).apply();
         sharedPreferences.edit().putBoolean("login", true).apply();
     }
 
     @Override
     public void signUpFailure(String message) {
-        Dialog dialog = new Dialog(getContext());
-        dialog.setContentView(R.layout.alert_dialog);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        alertBinding.tvAlertMessage.setText(message);
-        dialog.show();
-        dialog.findViewById(R.id.btn_dismiss).setOnClickListener(vw1 -> {
-            dialog.dismiss();
-        });
+        Log.i("TAG", "signUpFailure: "+message);
     }
 
     @Override

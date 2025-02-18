@@ -51,7 +51,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         CategoryDTO.CategoryMealDTO category = categories.get(position);
         holder.onBind(categories.get(position));
         holder.card.setOnClickListener(vw -> {
-            navigateToFragments.navigateToMeals(category.getStrCategory(),null);
+            navigateToFragments.navigateToMeals(category.getStrCategory(),null,null);
         });
     }
 

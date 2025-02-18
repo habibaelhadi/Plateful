@@ -37,6 +37,6 @@ public interface APIService {
     @GET("list.php?i=list")
     Observable<AllIngredients> getAllIngredients();
 
-//    @GET("filter.php")
-//    Single<CategoryAllMeals> getMealsByIngredients(@Query("i") String ingredient);
+   @GET("filter.php")
+   Single<MealsCategoryAreaResponse> getMealsByIngredients(@Query("i") String ingredient);
 }

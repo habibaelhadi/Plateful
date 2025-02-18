@@ -5,8 +5,11 @@ import com.example.plateful.models.DTOs.CategoryDTO;
 import com.example.plateful.models.DTOs.CountryDTO;
 import com.example.plateful.models.DTOs.DailyMealDTO;
 import com.example.plateful.models.DTOs.IngredientDTO;
+import com.example.plateful.models.DTOs.MealCategoryAreaDTO;
 import com.example.plateful.models.DTOs.MealDetailsResponse;
 import com.example.plateful.models.DTOs.MealsCategoryAreaResponse;
+
+import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
@@ -52,6 +55,10 @@ public class APIRemoteDataSource {
 
     public Single<MealDetailsResponse> getMealDetails(String id){
         return apiService.getMealDetails(id);
+    }
+
+    public  Single<MealsCategoryAreaResponse> getMealsByIngredients(String ingredient){
+        return apiService.getMealsByIngredients(ingredient);
     }
 
     public Observable<AllIngredients> getAllIngredients(){ return apiService.getAllIngredients();}

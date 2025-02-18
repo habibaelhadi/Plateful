@@ -16,4 +16,6 @@ public interface HomeView {
     public void addToFavourites();
     public void removeFromFavourites();
     public void addToPlan();
+    public void showProgress();
+    public void hideProgress();
 }

@@ -76,9 +76,7 @@ public class LoginFragment extends Fragment implements LoginView {
     @Override
     public void loginSuccess() {
         Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_homeFragment);
-        sharedPreferences.edit().putString("id", loginPresenter.getUserId()).apply();
-        sharedPreferences.edit().putString("email", binding.emailLogin.getText().toString()).apply();
-        sharedPreferences.edit().putBoolean("login", true).apply();
+        loginPresenter.getUserName();
     }
 
     @Override

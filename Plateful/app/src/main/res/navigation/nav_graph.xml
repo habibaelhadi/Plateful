@@ -98,6 +98,12 @@
             android:name="mealDTO"
             app:argType="com.example.plateful.models.DTOs.MealDTO"
             app:nullable="true" />
+        <argument
+            android:name="isSaved"
+            app:argType="boolean" />
+        <argument
+            android:name="isPlanned"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/categoryAreaListFragment"
@@ -115,6 +121,10 @@
         <action
             android:id="@+id/action_categoryAreaListFragment_to_mealDetailsFragment"
             app:destination="@id/mealDetailsFragment" />
+        <argument
+            android:name="ingredientName"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/favouriteFragment"
