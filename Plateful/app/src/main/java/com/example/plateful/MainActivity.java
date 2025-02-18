@@ -10,11 +10,13 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -88,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
                 checkNetwork();
             }
         });
+
+        changeSystemNavigationBarColor();
     }
 
     @Override
@@ -95,6 +99,18 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    private void changeSystemNavigationBarColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.setNavigationBarColor(ContextCompat.getColor(this, R.color.white));
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                View decorView = window.getDecorView();
+                int flags = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+                decorView.setSystemUiVisibility(flags);
+            }
+        }
+    }
 
     private boolean handleBottomNavigation(MenuItem item) {
         int itemId = item.getItemId();

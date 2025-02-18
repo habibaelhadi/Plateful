@@ -87,7 +87,6 @@ public class IntroFragment extends Fragment implements IntroView{
     @Override
     public void loginToGoogleSuccess() {
         Navigation.findNavController(requireView()).navigate(R.id.action_introFragment_to_homeFragment);
-        sharedPreferences.edit().putBoolean("google", true).apply();
     }
 
     @Override

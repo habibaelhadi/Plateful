@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.plateful.MainActivity;
@@ -114,6 +115,7 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
         View header = binding.nav.getHeaderView(0);
         TextView nameHeader = header.findViewById(R.id.username_header);
         TextView emailHeader = header.findViewById(R.id.email_header);
+        ImageView imageHeader = header.findViewById(R.id.image_header);
         String name = sharedPreferences.getString("username","");
         String email = sharedPreferences.getString("email","");
 
@@ -128,6 +130,13 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
             emailHeader.setText(email);
         }
 
+        if(sharedPreferences.getBoolean("google",false) == true){
+            Glide.with(getContext()).load(sharedPreferences.getString("photo","")).into(binding.image);
+            Glide.with(getContext()).load(sharedPreferences.getString("photo","")).into(imageHeader);
+        }else{
+            binding.image.setImageResource(R.drawable.woman);
+            imageHeader.setImageResource(R.drawable.woman);
+        }
 
         binding.searchView.setOnSearchClickListener(vw -> {
             binding.chipGroup.setVisibility(View.VISIBLE);

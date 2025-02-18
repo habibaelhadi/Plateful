@@ -77,6 +77,7 @@ public class SignUpFragment extends Fragment implements SignUpView {
         Navigation.findNavController(getView()).navigate(R.id.action_signUpFragment_to_homeFragment);
         presenter.updateUserProfile(binding.username.getText().toString());
         sharedPreferences.edit().putString("email", binding.emailSignUp.getText().toString()).apply();
+        sharedPreferences.edit().putString("photo", null).apply();
         sharedPreferences.edit().putBoolean("login", true).apply();
     }
 

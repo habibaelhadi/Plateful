@@ -8,16 +8,26 @@
     android:background="@color/white"
     android:elevation="3dp">
 
-    <ImageView
+
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/avatar_header"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:orientation="vertical"
-        android:src="@drawable/woman"
-       app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="100dp"
+        app:cardBackgroundColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:scaleType="fitXY"
-        android:layout_margin="20dp"/>
+        android:layout_margin="16dp"
+        >
+        <ImageView
+            android:id="@+id/image_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/woman"
+
+            />
+
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/username_header"

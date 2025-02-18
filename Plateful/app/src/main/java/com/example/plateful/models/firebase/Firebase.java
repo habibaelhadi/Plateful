@@ -48,6 +48,7 @@ public class Firebase {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(context.getString(R.string.default_web_client_id))
                 .requestEmail()
+                .requestProfile()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(context, gso);
     }
@@ -87,10 +88,8 @@ public class Firebase {
 
     public Intent getGoogleSignInIntent() {
         if (googleSignInClient != null) {
-            Log.d("TAG", "Returning Google Sign-In intent.");
             return googleSignInClient.getSignInIntent();
         } else {
-            Log.e("TAG", "googleSignInClient is null. Did you call connectToGoogle()?");
             return null;
         }
     }

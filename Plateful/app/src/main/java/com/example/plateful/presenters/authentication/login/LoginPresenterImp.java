@@ -45,6 +45,7 @@ public class LoginPresenterImp implements LoginPresenter {
         if (currentUser != null) {
             sharedPreferences.edit().putString("id", currentUser.getUid()).apply();
             sharedPreferences.edit().putString("username", currentUser.getDisplayName()).apply();
+            sharedPreferences.edit().putString("photo", null).apply();
             sharedPreferences.edit().putString("email", currentUser.getEmail()).apply();
             sharedPreferences.edit().putBoolean("login", true).apply();
         }

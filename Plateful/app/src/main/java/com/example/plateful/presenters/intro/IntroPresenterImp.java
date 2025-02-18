@@ -3,6 +3,7 @@ package com.example.plateful.presenters.intro;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import androidx.activity.result.ActivityResultLauncher;
 import com.example.plateful.models.firebase.Firebase;
@@ -17,12 +18,12 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class IntroPresenterImp implements IntroPresenter{
     private final IntroView view;
-    private final DataRepository repository;
+    private SharedPreferences sharedPreferences;
     private final Firebase firebase;
 
     public IntroPresenterImp(IntroView view,Context context) {
         this.view = view;
-        repository = DataRepository.getInstance(context);
+        sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         firebase = Firebase.getInstance();
     }
 
@@ -60,6 +61,11 @@ public class IntroPresenterImp implements IntroPresenter{
         Firebase.auth.signInWithCredential(authCredential)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        sharedPreferences.edit().putBoolean("google", true).apply();
+                        sharedPreferences.edit().putString("id", Firebase.auth.getCurrentUser().getUid()).apply();
+                        sharedPreferences.edit().putString("username", Firebase.auth.getCurrentUser().getDisplayName()).apply();
+                        sharedPreferences.edit().putString("email", Firebase.auth.getCurrentUser().getEmail()).apply();
+                        sharedPreferences.edit().putString("photo", Firebase.auth.getCurrentUser().getPhotoUrl().toString()).apply();
                         view.loginToGoogleSuccess();
                     } else {
                         view.loginToGoogleFailure(task.getException().getMessage());
