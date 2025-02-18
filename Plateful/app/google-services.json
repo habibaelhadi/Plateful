@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1082972687699",
+    "project_id": "palteful",
+    "storage_bucket": "palteful.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082972687699:android:d70f55c9945c48e3df25a6",
+        "android_client_info": {
+          "package_name": "com.example.plateful"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082972687699-dn1nnojn29rurdshc2dl596gquu61136.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.plateful",
+            "certificate_hash": "c4be916f31923006173411553c1236a824269541"
+          }
+        },
+        {
+          "client_id": "1082972687699-jjpr3j561ppuiq5h9392rnh09hc8ikgu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF955xis3-hw87SDhSjjtIZXI87OZAR-M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082972687699-fpsalp7bk5b81jjmoi9eelsm01tjsaoi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

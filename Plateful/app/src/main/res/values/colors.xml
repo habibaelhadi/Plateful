@@ -2,4 +2,22 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="intro_background">#1B6DC1</color>
+    <color name="button_color">#FB6E56</color>
+    <color name="obacity_black">#80000000</color>
+    <color name="gray">#D6D6D6</color>
+    <color name="card_color">#A9A9A9</color>
+    <color name="soft_red">#FFADAD</color>
+    <color name="warm_orange">#FFD6A5</color>
+    <color name="soft_yellow">#FDFFB6</color>
+    <color name="soft_green">#CAFFBF</color>
+    <color name="light_blue">#9BF6FF</color>
+    <color name="sky_blue">#A0C4FF</color>
+    <color name="lavender">#BDB2FF</color>
+    <color name="soft_pink">#FFC6FF</color>
+    <color name="plan_button_disabled">#D24C3A</color>
+    <color name="purple_500">#6200EE</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="green">#4CAF50</color>
+    <color name="red">#F44336</color>
 </resources>

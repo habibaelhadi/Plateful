@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:enabled="true"
+        android:icon="@drawable/home"
+        android:title="@string/home"/>
+    <item
+        android:id="@+id/favouriteFragment"
+        android:enabled="true"
+        android:icon="@drawable/heart"
+        android:title="@string/favourites"/>
+    <item
+        android:id="@+id/planFragment2"
+        android:enabled="true"
+        android:icon="@drawable/planning"
+        android:title="@string/plan"/>
+</menu>
