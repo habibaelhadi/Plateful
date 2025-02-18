@@ -81,3 +81,6 @@ Plateful is built using the following libraries and frameworks:
 #### Authentication: 
 * Google Sign-In
 * Firebase Auth
+
+### Architecture Used
+* MVP Architecture
