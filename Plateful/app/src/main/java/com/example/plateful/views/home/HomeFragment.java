@@ -172,6 +172,7 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
             @Override
             public boolean onClose() {
                 binding.chipGroup.setVisibility(View.GONE);
+                binding.chipGroup.clearCheck();
                 updateViewVisibility(null);
                 return false;
             }
@@ -232,6 +233,14 @@ public class HomeFragment extends Fragment implements HomeView,NavigateToFragmen
                 DateUtil.showCalendarPicker(meal,getParentFragmentManager());
             }
         });
+
+        binding.chipGroup.clearCheck();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.chipGroup.clearCheck();
     }
 
     private void updateData() {
