@@ -1,7 +1,7 @@
 # Plateful 🍽️
 
 ## Overview  
-Plateful is a modern food discovery and ordering application that provides a seamless user experience for browsing, selecting, and purchasing meals. Built with an intuitive UI and integrated with Firebase for authentication and analytics, it ensures a smooth and secure ordering process.  
+Plateful is a modern food discovery and ordering application that provides a seamless user experience for browsing, selecting, and purchasing meals. Built with an intuitive UI and integrated with Firebase for authentication and analytics.  
 
 ## Installation  
 To set up the project locally:  
@@ -46,3 +46,38 @@ Plateful is built using the following libraries and frameworks:
 #### Reactive Programming
 * io.reactivex.rxjava3:rxandroid:3.0.2 – RxJava Android bindings.
 * io.reactivex.rxjava3:rxjava:3.1.5 – Asynchronous programming.
+
+### Features
+✅ User Authentication – Sign in/up via Google and Firebase Auth.
+
+✅ Real-time Database – Sync data with Firebase Realtime Database.
+
+✅ Offline Storage – Room database for caching data locally.
+
+✅ Smooth Animations – Lottie integration for better UI experience.
+
+✅ Secure API Calls – Retrofit with RxJava for efficient data handling.
+
+✅ Modern UI Design – Material Design components.
+
+### Technology Used
+#### Programming Language: 
+* Java
+  
+#### Frameworks: 
+* AndroidX
+* Firebase
+* Retrofit
+* RxJava
+
+#### Database: 
+* Room
+* Firebase Realtime Database
+
+#### Design: 
+* Material Design
+* Lottie Animations
+
+#### Authentication: 
+* Google Sign-In
+* Firebase Auth
